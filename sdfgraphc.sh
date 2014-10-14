@@ -1,0 +1,1 @@
+java -cp $STRATEGO_JAR org.strategoxt.strj.Main -i sdf-graph.str  -o sdfgraph && (cd sdfgraph; javac -cp /Users/seba/Library/eclipse-sugar-test/plugins/org.strategoxt.strj_1.2.0.201405152116/java/strategoxt.jar sdfgraph.java)

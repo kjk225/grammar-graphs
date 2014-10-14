@@ -1,0 +1,57 @@
+module sdf-graph
+
+imports Sdf2
+imports libstrategolib
+
+signature constructors
+	Node : ID * Label -> Node
+	Edge : ID * Source * Target -> Edge
+	Graph : List(Node) * List(Edge) -> Graph
+
+rules
+
+  main = io-wrap(bindings; make-graph; print-graph-json; printstring)
+
+  bindings = collect-all(binding); concat
+
+  binding : prod(lhs, sort(def), _) -> bs
+  where
+	refs := <collect-all(?sort(<id>))> lhs;
+	bs := <map(bind(|def))> refs
+
+  bind(|def) = !(def, <id>)
+
+
+rules
+  make-graph : bindings -> Graph(nodes, edges)
+  where
+	nodes := <mapconcat(\(def,ref) -> [def,ref]\); make-set; map(make-node)> bindings;
+	edges := <make-set; map(make-edge)> bindings
+
+  make-node : name -> Node(name, name)
+
+  make-edge : (def, ref) -> Edge(name, def, ref)
+  where
+	name := <conc-strings> (def, "-", ref)
+
+
+rules
+  print-graph-json : Graph(nodes, edges) -> $[{ [node-string], [edge-string] }]
+  where
+	node-string := $["nodes": [<print-list-json(print-node-json)> nodes]];
+	edge-string := $["edges": [<print-list-json(print-edge-json)> edges]]
+
+  print-node-json : Node(name, label) -> $[{ "id": "[name]", "label": "[label]" }]
+  print-edge-json : Edge(name, source, target) -> $[{ "id": "[name]", "source": "[source]", "target": "[target]" }]
+
+
+  print-list-json(p) : ls -> <conc-strings> ("[", elems, "]")
+  where
+	elems := <map(p); intersperse(|", "); concat-strings> ls
+
+
+rules
+  intersperse(|s) : [] -> []
+  intersperse(|s) : [x] -> [x]
+  intersperse(|s) : [x|y] -> [x,s| <intersperse(|s)> y]
+

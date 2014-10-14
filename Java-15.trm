@@ -1,0 +1,4352 @@
+definition(
+  [ module(
+      unparameterized("languages/java-15/expressions/Priorities")
+    , [imports([module(unparameterized("languages/java-15/lexical/Identifiers")), module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  context-free-priorities(
+                    [ chain(
+                        [ simple-group(
+                            prod(
+                              [ sort("Expr")
+                              , lit(".")
+                              , lit("new")
+                              , opt(sort("TypeArgs"))
+                              , sort("Id")
+                              , opt(sort("TypeArgs"))
+                              , lit("(")
+                              , iter-star-sep(sort("Expr"), lit(","))
+                              , lit(")")
+                              , opt(sort("ClassBody"))
+                              ]
+                            , sort("Expr")
+                            , attrs([])
+                            )
+                          )
+                        , assoc-group(
+                            right()
+                          , [ prod(
+                                [sort("Expr"), lit("++")]
+                              , sort("Expr")
+                              , attrs([])
+                              )
+                            , prod(
+                                [sort("Expr"), lit("--")]
+                              , sort("Expr")
+                              , attrs([])
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                , context-free-priorities(
+                    [ chain(
+                        [ assoc-group(
+                            right()
+                          , [ prod(
+                                [sort("Expr"), lit("++")]
+                              , sort("Expr")
+                              , attrs([])
+                              )
+                            , prod(
+                                [sort("Expr"), lit("--")]
+                              , sort("Expr")
+                              , attrs([])
+                              )
+                            ]
+                          )
+                        , prods-group(
+                            [ prod(
+                                [lit("("), sort("PrimType"), lit(")"), sort("Expr")]
+                              , sort("Expr")
+                              , attrs([])
+                              )
+                            , prod(
+                                [lit("("), sort("RefType"), lit(")"), sort("Expr")]
+                              , sort("Expr")
+                              , attrs([])
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                )
+              , context-free-priorities(
+                  [ chain(
+                      [ simple-group(
+                          prod(
+                            [lit("("), sort("PrimType"), lit(")"), sort("Expr")]
+                          , sort("Expr")
+                          , attrs([])
+                          )
+                        )
+                      , assoc-group(
+                          left()
+                        , [ prod(
+                              [sort("Expr"), lit("*"), sort("Expr")]
+                            , sort("Expr")
+                            , attrs([])
+                            )
+                          , prod(
+                              [sort("Expr"), lit("/"), sort("Expr")]
+                            , sort("Expr")
+                            , attrs([])
+                            )
+                          , prod(
+                              [sort("Expr"), lit("%"), sort("Expr")]
+                            , sort("Expr")
+                            , attrs([])
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              )
+            , context-free-priorities(
+                [ chain(
+                    [ simple-group(
+                        prod(
+                          [lit("("), sort("RefType"), lit(")"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      )
+                    , prods-group(
+                        [ prod(
+                            [lit("++"), sort("Expr")]
+                          , sort("Expr")
+                          , attrs([])
+                          )
+                        , prod(
+                            [lit("--"), sort("Expr")]
+                          , sort("Expr")
+                          , attrs([])
+                          )
+                        , prod(
+                            [lit("+"), sort("Expr")]
+                          , sort("Expr")
+                          , attrs([])
+                          )
+                        , prod(
+                            [lit("-"), sort("Expr")]
+                          , sort("Expr")
+                          , attrs([])
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+            )
+          , context-free-priorities(
+              [ chain(
+                  [ prods-group(
+                      [ prod(
+                          [sort("Expr"), sort("ArraySubscript")]
+                        , sort("ArrayAccess")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("."), sort("Id")]
+                        , sort("FieldAccess")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("."), opt(sort("TypeArgs")), sort("Id")]
+                        , sort("MethodSpec")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , assoc-group(
+                      right()
+                    , [ prod(
+                          [sort("Expr"), lit("++")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("--")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , prods-group(
+                      [ prod(
+                          [lit("++"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [lit("--"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [lit("+"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [lit("-"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [lit("~"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [lit("!"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , assoc-group(
+                      left()
+                    , [ prod(
+                          [sort("Expr"), lit("*"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("/"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("%"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , assoc-group(
+                      left()
+                    , [ prod(
+                          [sort("Expr"), lit("+"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("-"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , assoc-group(
+                      left()
+                    , [ prod(
+                          [sort("Expr"), lit("<<"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit(">>"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit(">>>"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , assoc-group(
+                      left()
+                    , [ prod(
+                          [sort("Expr"), lit("instanceof"), sort("RefType")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("<"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit(">"), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("<="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit(">="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , assoc-group(
+                      left()
+                    , [ prod(
+                          [sort("Expr"), lit("=="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("Expr"), lit("!="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  , simple-group(
+                      prod(
+                        [sort("Expr"), lit("&"), sort("Expr")]
+                      , sort("Expr")
+                      , attrs([])
+                      )
+                    )
+                  , simple-group(
+                      prod(
+                        [sort("Expr"), lit("^"), sort("Expr")]
+                      , sort("Expr")
+                      , attrs([])
+                      )
+                    )
+                  , simple-group(
+                      prod(
+                        [sort("Expr"), lit("|"), sort("Expr")]
+                      , sort("Expr")
+                      , attrs([])
+                      )
+                    )
+                  , simple-group(
+                      prod(
+                        [sort("Expr"), lit("&&"), sort("Expr")]
+                      , sort("Expr")
+                      , attrs([])
+                      )
+                    )
+                  , simple-group(
+                      prod(
+                        [sort("Expr"), lit("||"), sort("Expr")]
+                      , sort("Expr")
+                      , attrs([])
+                      )
+                    )
+                  , simple-group(
+                      prod(
+                        [sort("Expr"), sort("CondMid"), sort("Expr")]
+                      , sort("Expr")
+                      , attrs([])
+                      )
+                    )
+                  , assoc-group(
+                      right()
+                    , [ prod(
+                          [sort("LHS"), lit("="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("*="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("/="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("%="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("+="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("-="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("<<="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit(">>="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit(">>>="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("&="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("^="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      , prod(
+                          [sort("LHS"), lit("|="), sort("Expr")]
+                        , sort("Expr")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/Restrictions")
+    , []
+    , [ exports(
+          lexical-restrictions(
+            [ follow(
+                [lit("+")]
+              , single(char-class(simple-charclass(present(short("\\+")))))
+              )
+            , follow(
+                [lit("-")]
+              , single(char-class(simple-charclass(present(short("\\-")))))
+              )
+            , follow(
+                [lit("/")]
+              , single(char-class(simple-charclass(present(short("\\/")))))
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/AssignmentOperators")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("LHS")])
+          , context-free-syntax(
+              [ prod(
+                  [sort("LHS"), lit("="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("Assign"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("*="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignMul"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("/="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignDiv"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("%="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignRemain"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("+="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignPlus"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("-="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignMinus"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("<<="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignLeftShift"))])
+                )
+              , prod(
+                  [sort("LHS"), lit(">>="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignRightShift"))])
+                )
+              , prod(
+                  [sort("LHS"), lit(">>>="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignURightShift"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("&="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignAnd"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("^="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignExcOr"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("|="), sort("Expr")]
+                , sort("Expr")
+                , attrs([term(cons("AssignOr"))])
+                )
+              , prod([sort("ExprName")], sort("LHS"), attrs([]))
+              , prod([sort("FieldAccess")], sort("LHS"), attrs([]))
+              , prod([sort("ArrayAccess")], sort("LHS"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/BinaryOperators")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main")), module(unparameterized("languages/java-15/types/Main"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("CondMid")])
+          , context-free-syntax(
+              [ prod(
+                  [sort("Expr"), lit("instanceof"), sort("RefType")]
+                , sort("Expr")
+                , attrs([term(cons("InstanceOf"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("*"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Mul"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("/"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Div"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("%"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Remain"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("+"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Plus"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("-"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Minus"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("<<"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("LeftShift"))])
+                )
+              , prod(
+                  [sort("Expr"), lit(">>"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("RightShift"))])
+                )
+              , prod(
+                  [sort("Expr"), lit(">>>"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("URightShift"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("<"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Lt"))])
+                )
+              , prod(
+                  [sort("Expr"), lit(">"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Gt"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("<="), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("LtEq"))])
+                )
+              , prod(
+                  [sort("Expr"), lit(">="), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("GtEq"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("=="), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Eq"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("!="), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("NotEq"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("&&"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("LazyAnd"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("||"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("LazyOr"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("&"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("And"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("^"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("ExcOr"))])
+                )
+              , prod(
+                  [sort("Expr"), lit("|"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(left()), term(cons("Or"))])
+                )
+              , prod(
+                  [sort("Expr"), sort("CondMid"), sort("Expr")]
+                , sort("Expr")
+                , attrs([assoc(right()), term(cons("Cond"))])
+                )
+              , prod(
+                  [lit("?"), sort("Expr"), lit(":")]
+                , sort("CondMid")
+                , attrs([bracket()])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/UnaryOperators")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          context-free-syntax(
+            [ prod(
+                [lit("+"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("Plus"))])
+              )
+            , prod(
+                [lit("-"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("Minus"))])
+              )
+            , prod(
+                [lit("++"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("PreIncr"))])
+              )
+            , prod(
+                [lit("--"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("PreDecr"))])
+              )
+            , prod(
+                [lit("~"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("Complement"))])
+              )
+            , prod(
+                [lit("!"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("Not"))])
+              )
+            , prod(
+                [lit("("), sort("PrimType"), lit(")"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("CastPrim"))])
+              )
+            , prod(
+                [lit("("), sort("RefType"), lit(")"), sort("Expr")]
+              , sort("Expr")
+              , attrs([term(cons("CastRef"))])
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/Postfix")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          context-free-syntax(
+            [ prod([sort("ExprName")], sort("Expr"), attrs([]))
+            , prod(
+                [sort("Expr"), lit("++")]
+              , sort("Expr")
+              , attrs([term(cons("PostIncr"))])
+              )
+            , prod(
+                [sort("Expr"), lit("--")]
+              , sort("Expr")
+              , attrs([term(cons("PostDecr"))])
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/MethodInvocation")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              sorts([sort("MethodSpec")])
+            , context-free-syntax(
+                [ prod(
+                    [ sort("MethodSpec")
+                    , lit("(")
+                    , iter-star-sep(sort("Expr"), lit(","))
+                    , lit(")")
+                    ]
+                  , sort("Expr")
+                  , attrs([term(cons("Invoke"))])
+                  )
+                , prod(
+                    [sort("MethodName")]
+                  , sort("MethodSpec")
+                  , attrs([term(cons("Method"))])
+                  )
+                , prod(
+                    [sort("Expr"), lit("."), opt(sort("TypeArgs")), sort("Id")]
+                  , sort("MethodSpec")
+                  , attrs([term(cons("Method"))])
+                  )
+                , prod(
+                    [lit("super"), lit("."), opt(sort("TypeArgs")), sort("Id")]
+                  , sort("MethodSpec")
+                  , attrs([term(cons("SuperMethod"))])
+                  )
+                , prod(
+                    [ sort("TypeName")
+                    , lit(".")
+                    , lit("super")
+                    , lit(".")
+                    , opt(sort("TypeArgs"))
+                    , sort("Id")
+                    ]
+                  , sort("MethodSpec")
+                  , attrs([term(cons("QSuperMethod"))])
+                  )
+                , prod(
+                    [sort("AmbName"), lit("."), sort("TypeArgs"), sort("Id")]
+                  , sort("MethodSpec")
+                  , attrs([term(cons("GenericMethod"))])
+                  )
+                ]
+              )
+            )
+          , context-free-priorities(
+              [ chain(
+                  [ simple-group(
+                      prod(
+                        [sort("Expr"), lit("."), opt(sort("TypeArgs")), sort("Id")]
+                      , sort("MethodSpec")
+                      , attrs([])
+                      )
+                    )
+                  , simple-group(
+                      prod([sort("ExprName")], sort("Expr"), attrs([]))
+                    )
+                  ]
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/ArrayAccess")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("ArrayAccess"), sort("ArraySubscript")])
+          , context-free-syntax(
+              [ prod([sort("ArrayAccess")], sort("Expr"), attrs([]))
+              , prod(
+                  [sort("Expr"), sort("ArraySubscript")]
+                , sort("ArrayAccess")
+                , attrs([term(cons("ArrayAccess"))])
+                )
+              , prod(
+                  [lit("["), sort("Expr"), lit("]")]
+                , sort("ArraySubscript")
+                , attrs([bracket()])
+                )
+              , prod(
+                  [sort("ArrayCreationExpr"), sort("ArraySubscript")]
+                , sort("ArrayAccess")
+                , attrs([reject()])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/FieldAccess")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              sorts([sort("FieldAccess")])
+            , context-free-syntax(
+                [prod([sort("FieldAccess")], sort("Expr"), attrs([]))]
+              )
+            )
+          , context-free-syntax(
+              [ prod(
+                  [sort("Expr"), lit("."), sort("Id")]
+                , sort("FieldAccess")
+                , attrs([term(cons("Field"))])
+                )
+              , prod(
+                  [sort("ExprName"), lit("."), sort("Id")]
+                , sort("FieldAccess")
+                , attrs([reject()])
+                )
+              , prod(
+                  [lit("super"), lit("."), sort("Id")]
+                , sort("FieldAccess")
+                , attrs([term(cons("SuperField"))])
+                )
+              , prod(
+                  [ sort("TypeName")
+                  , lit(".")
+                  , lit("super")
+                  , lit(".")
+                  , sort("Id")
+                  ]
+                , sort("FieldAccess")
+                , attrs([term(cons("QSuperField"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/ArrayCreation")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main"))])]
+    , [ exports(
+          conc-grammars(
+            sorts(
+              [sort("ArrayCreationExpr"), sort("ArrayBaseType"), sort("Dim"), sort("DimExpr")]
+            )
+          , context-free-syntax(
+              [ prod([sort("ArrayCreationExpr")], sort("Expr"), attrs([]))
+              , prod(
+                  [ lit("new")
+                  , sort("ArrayBaseType")
+                  , iter(sort("DimExpr"))
+                  , iter-star(sort("Dim"))
+                  ]
+                , sort("ArrayCreationExpr")
+                , attrs([term(cons("NewArray"))])
+                )
+              , prod(
+                  [lit("new"), sort("ArrayBaseType"), iter(sort("Dim")), sort("ArrayInit")]
+                , sort("ArrayCreationExpr")
+                , attrs([term(cons("NewArray"))])
+                )
+              , prod([sort("PrimType")], sort("ArrayBaseType"), attrs([]))
+              , prod([sort("TypeName")], sort("ArrayBaseType"), attrs([]))
+              , prod(
+                  [sort("TypeName"), lit("<"), lit("?"), lit(">")]
+                , sort("ArrayBaseType")
+                , attrs([term(cons("UnboundWld"))])
+                )
+              , prod(
+                  [lit("["), sort("Expr"), lit("]")]
+                , sort("DimExpr")
+                , attrs([term(cons("Dim"))])
+                )
+              , prod(
+                  [lit("["), lit("]")]
+                , sort("Dim")
+                , attrs([term(cons("Dim"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/ClassInstanceCreation")
+    , [imports([module(unparameterized("languages/java-15/expressions/Main")), module(unparameterized("languages/java-15/classes/ClassDeclarations"))])]
+    , [ exports(
+          context-free-syntax(
+            [ prod(
+                [ lit("new")
+                , opt(sort("TypeArgs"))
+                , sort("ClassOrInterfaceType")
+                , lit("(")
+                , iter-star-sep(sort("Expr"), lit(","))
+                , lit(")")
+                , opt(sort("ClassBody"))
+                ]
+              , sort("Expr")
+              , attrs([term(cons("NewInstance"))])
+              )
+            , prod(
+                [ sort("Expr")
+                , lit(".")
+                , lit("new")
+                , opt(sort("TypeArgs"))
+                , sort("Id")
+                , opt(sort("TypeArgs"))
+                , lit("(")
+                , iter-star-sep(sort("Expr"), lit(","))
+                , lit(")")
+                , opt(sort("ClassBody"))
+                ]
+              , sort("Expr")
+              , attrs([term(cons("QNewInstance"))])
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/Primary")
+    , [ imports(
+          [module(unparameterized("languages/java-15/lexical/literals/Main")), module(unparameterized("languages/java-15/names/Main")), module(unparameterized("languages/java-15/expressions/Main"))]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  conc-grammars(
+                    sorts([sort("Literal")])
+                  , context-free-syntax(
+                      [ prod(
+                          [sort("Literal")]
+                        , sort("Expr")
+                        , attrs([term(cons("Lit"))])
+                        )
+                      , prod([sort("IntLiteral")], sort("Literal"), attrs([]))
+                      , prod([sort("FloatLiteral")], sort("Literal"), attrs([]))
+                      , prod([sort("BoolLiteral")], sort("Literal"), attrs([]))
+                      , prod([sort("CharLiteral")], sort("Literal"), attrs([]))
+                      , prod([sort("StringLiteral")], sort("Literal"), attrs([]))
+                      , prod([sort("NullLiteral")], sort("Literal"), attrs([]))
+                      ]
+                    )
+                  )
+                , sorts([sort("ClassLiteral")])
+                )
+              , context-free-syntax(
+                  [ prod([sort("ClassLiteral")], sort("Literal"), attrs([]))
+                  , prod(
+                      [sort("Type"), lit("."), lit("class")]
+                    , sort("ClassLiteral")
+                    , attrs([term(cons("Class"))])
+                    )
+                  , prod(
+                      [lit("void"), lit("."), lit("class")]
+                    , sort("ClassLiteral")
+                    , attrs([term(cons("VoidClass"))])
+                    )
+                  ]
+                )
+              )
+            , context-free-syntax(
+                [ prod(
+                    [lit("this")]
+                  , sort("Expr")
+                  , attrs([term(cons("This"))])
+                  )
+                , prod(
+                    [sort("TypeName"), lit("."), lit("this")]
+                  , sort("Expr")
+                  , attrs([term(cons("QThis"))])
+                  )
+                ]
+              )
+            )
+          , context-free-syntax(
+              [ prod(
+                  [lit("("), sort("Expr"), lit(")")]
+                , sort("Expr")
+                , attrs([bracket()])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/expressions/Main")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/expressions/Primary"))
+          , module(unparameterized("languages/java-15/expressions/ClassInstanceCreation"))
+          , module(unparameterized("languages/java-15/expressions/ArrayCreation"))
+          , module(unparameterized("languages/java-15/expressions/FieldAccess"))
+          , module(unparameterized("languages/java-15/expressions/ArrayAccess"))
+          , module(unparameterized("languages/java-15/expressions/MethodInvocation"))
+          , module(unparameterized("languages/java-15/expressions/Postfix"))
+          , module(unparameterized("languages/java-15/expressions/UnaryOperators"))
+          , module(unparameterized("languages/java-15/expressions/BinaryOperators"))
+          , module(unparameterized("languages/java-15/expressions/AssignmentOperators"))
+          , module(unparameterized("languages/java-15/expressions/Restrictions"))
+          , module(unparameterized("languages/java-15/expressions/Priorities"))
+          ]
+        )
+      ]
+    , [exports(sorts([sort("Expr")]))]
+    )
+  , module(
+      unparameterized("languages/java-15/statements/Main")
+    , [ imports(
+          [module(unparameterized("languages/java-15/statements/Blocks")), module(unparameterized("languages/java-15/statements/LocalVariableDeclarations")), module(unparameterized("languages/java-15/statements/Statements"))]
+        )
+      ]
+    , []
+    )
+  , module(
+      unparameterized("languages/java-15/arrays/Main")
+    , [imports([module(unparameterized("languages/java-15/arrays/ArrayInitializers"))])]
+    , []
+    )
+  , module(
+      unparameterized("languages/java-15/interfaces/Main")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/interfaces/InterfaceDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/AbstractMethodDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/AnnotationTypes"))
+          , module(unparameterized("languages/java-15/interfaces/Annotations"))
+          ]
+        )
+      ]
+    , []
+    )
+  , module(
+      unparameterized("languages/java-15/classes/Main")
+    , [imports([module(unparameterized("languages/java-15/classes/ClassDeclarations")), module(unparameterized("languages/java-15/classes/EnumDeclarations"))])]
+    , []
+    )
+  , module(
+      unparameterized("languages/java-15/packages/PackageDeclarations")
+    , [imports([module(unparameterized("languages/java-15/names/Main")), module(unparameterized("languages/java-15/interfaces/Annotations"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("PackageDec")])
+          , context-free-syntax(
+              [ prod(
+                  [iter-star(sort("Anno")), lit("package"), sort("PackageName"), lit(";")]
+                , sort("PackageDec")
+                , attrs([term(cons("PackageDec"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/packages/ImportDeclarations")
+    , [imports([module(unparameterized("languages/java-15/lexical/Identifiers")), module(unparameterized("languages/java-15/names/Main"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("ImportDec")])
+          , context-free-syntax(
+              [ prod(
+                  [lit("import"), sort("TypeName"), lit(";")]
+                , sort("ImportDec")
+                , attrs([term(cons("TypeImportDec"))])
+                )
+              , prod(
+                  [ lit("import")
+                  , sort("PackageName")
+                  , lit(".")
+                  , lit("*")
+                  , lit(";")
+                  ]
+                , sort("ImportDec")
+                , attrs([term(cons("TypeImportOnDemandDec"))])
+                )
+              , prod(
+                  [ lit("import")
+                  , lit("static")
+                  , sort("TypeName")
+                  , lit(".")
+                  , sort("Id")
+                  , lit(";")
+                  ]
+                , sort("ImportDec")
+                , attrs([term(cons("StaticImportDec"))])
+                )
+              , prod(
+                  [ lit("import")
+                  , lit("static")
+                  , sort("TypeName")
+                  , lit(".")
+                  , lit("*")
+                  , lit(";")
+                  ]
+                , sort("ImportDec")
+                , attrs([term(cons("StaticImportOnDemandDec"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/interfaces/AnnotationTypes")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/classes/ClassDeclarations"))
+          , module(unparameterized("languages/java-15/classes/EnumDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/InterfaceDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/AbstractMethodDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/ConstantDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/Annotations"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts([sort("AnnoDec"), sort("AnnoDecHead")])
+              , context-free-syntax(
+                  [ prod(
+                      [sort("AnnoDecHead"), lit("{"), iter-star(sort("AnnoElemDec")), lit("}")]
+                    , sort("AnnoDec")
+                    , attrs([term(cons("AnnoDec"))])
+                    )
+                  , prod(
+                      [ iter-star(alt(sort("Anno"), sort("InterfaceMod")))
+                      , lit("@")
+                      , lit("interface")
+                      , sort("Id")
+                      ]
+                    , sort("AnnoDecHead")
+                    , attrs([term(cons("AnnoDecHead"))])
+                    )
+                  ]
+                )
+              )
+            , sorts([sort("AnnoElemDec"), sort("DefaultVal")])
+            )
+          , context-free-syntax(
+              [ prod(
+                  [ iter-star(sort("AbstractMethodMod"))
+                  , sort("Type")
+                  , sort("Id")
+                  , lit("(")
+                  , lit(")")
+                  , opt(sort("DefaultVal"))
+                  , lit(";")
+                  ]
+                , sort("AnnoElemDec")
+                , attrs([term(cons("AnnoMethodDec"))])
+                )
+              , prod([sort("ConstantDec")], sort("AnnoElemDec"), attrs([]))
+              , prod([sort("ClassDec")], sort("AnnoElemDec"), attrs([]))
+              , prod([sort("InterfaceDec")], sort("AnnoElemDec"), attrs([]))
+              , prod([sort("EnumDec")], sort("AnnoElemDec"), attrs([]))
+              , prod([sort("AnnoDec")], sort("AnnoElemDec"), attrs([]))
+              , prod(
+                  [lit(";")]
+                , sort("AnnoElemDec")
+                , attrs([term(cons("Semicolon"))])
+                )
+              , prod(
+                  [lit("default"), sort("ElemVal")]
+                , sort("DefaultVal")
+                , attrs([term(cons("DefaultVal"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/interfaces/AbstractMethodDeclarations")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/names/Main"))
+          , module(unparameterized("languages/java-15/types/Main"))
+          , module(unparameterized("languages/java-15/classes/MethodDeclarations"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("AbstractMethodDec"), sort("AbstractMethodMod")])
+          , context-free-syntax(
+              [ prod(
+                  [ iter-star(alt(sort("Anno"), sort("AbstractMethodMod")))
+                  , opt(sort("TypeParams"))
+                  , sort("ResultType")
+                  , sort("Id")
+                  , lit("(")
+                  , iter-star-sep(sort("FormalParam"), lit(","))
+                  , lit(")")
+                  , opt(sort("Throws"))
+                  , lit(";")
+                  ]
+                , sort("AbstractMethodDec")
+                , attrs([term(cons("AbstractMethodDec"))])
+                )
+              , prod(
+                  [ iter-star(alt(sort("Anno"), sort("AbstractMethodMod")))
+                  , opt(sort("TypeParams"))
+                  , sort("ResultType")
+                  , sort("Id")
+                  , lit("(")
+                  , iter-star-sep(sort("FormalParam"), lit(","))
+                  , lit(")")
+                  , iter(sort("Dim"))
+                  , opt(sort("Throws"))
+                  , lit(";")
+                  ]
+                , sort("AbstractMethodDec")
+                , attrs([term(cons("DeprAbstractMethodDec"))])
+                )
+              , prod([sort("Public")], sort("AbstractMethodMod"), attrs([]))
+              , prod([sort("Abstract")], sort("AbstractMethodMod"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/interfaces/ConstantDeclarations")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/types/Main"))
+          , module(unparameterized("languages/java-15/classes/MethodDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/Annotations"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("ConstantDec"), sort("ConstantMod")])
+          , context-free-syntax(
+              [ prod(
+                  [ iter-star(alt(sort("Anno"), sort("ConstantMod")))
+                  , sort("Type")
+                  , iter-sep(sort("VarDec"), lit(","))
+                  , lit(";")
+                  ]
+                , sort("ConstantDec")
+                , attrs([term(cons("ConstantDec"))])
+                )
+              , prod([sort("Public")], sort("ConstantMod"), attrs([]))
+              , prod([sort("Static")], sort("ConstantMod"), attrs([]))
+              , prod([sort("Final")], sort("ConstantMod"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/interfaces/InterfaceDeclarations")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/names/Main"))
+          , module(unparameterized("languages/java-15/types/Main"))
+          , module(unparameterized("languages/java-15/classes/ClassDeclarations"))
+          , module(unparameterized("languages/java-15/classes/MethodDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/ConstantDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/AbstractMethodDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/AnnotationTypes"))
+          , module(unparameterized("languages/java-15/interfaces/Annotations"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts(
+                  [ sort("InterfaceDec")
+                  , sort("InterfaceDecHead")
+                  , sort("ExtendsInterfaces")
+                  , sort("InterfaceMemberDec")
+                  , sort("InterfaceMod")
+                  ]
+                )
+              , context-free-syntax(
+                  [ prod([sort("AnnoDec")], sort("InterfaceDec"), attrs([]))
+                  , prod(
+                      [sort("InterfaceDecHead"), lit("{"), iter-star(sort("InterfaceMemberDec")), lit("}")]
+                    , sort("InterfaceDec")
+                    , attrs([term(cons("InterfaceDec"))])
+                    )
+                  , prod(
+                      [ iter-star(alt(sort("Anno"), sort("InterfaceMod")))
+                      , lit("interface")
+                      , sort("Id")
+                      , opt(sort("TypeParams"))
+                      , opt(sort("ExtendsInterfaces"))
+                      ]
+                    , sort("InterfaceDecHead")
+                    , attrs([term(cons("InterfaceDecHead"))])
+                    )
+                  , prod(
+                      [lit("extends"), iter-sep(sort("InterfaceType"), lit(","))]
+                    , sort("ExtendsInterfaces")
+                    , attrs([term(cons("ExtendsInterfaces"))])
+                    )
+                  ]
+                )
+              )
+            , context-free-syntax(
+                [ prod([sort("ConstantDec")], sort("InterfaceMemberDec"), attrs([]))
+                , prod([sort("AbstractMethodDec")], sort("InterfaceMemberDec"), attrs([]))
+                , prod([sort("ClassDec")], sort("InterfaceMemberDec"), attrs([]))
+                , prod([sort("InterfaceDec")], sort("InterfaceMemberDec"), attrs([]))
+                , prod(
+                    [lit(";")]
+                  , sort("InterfaceMemberDec")
+                  , attrs([term(cons("Semicolon"))])
+                  )
+                ]
+              )
+            )
+          , context-free-syntax(
+              [ prod([sort("Public")], sort("InterfaceMod"), attrs([]))
+              , prod([sort("Protected")], sort("InterfaceMod"), attrs([]))
+              , prod([sort("Private")], sort("InterfaceMod"), attrs([]))
+              , prod([sort("Abstract")], sort("InterfaceMod"), attrs([]))
+              , prod([sort("Static")], sort("InterfaceMod"), attrs([]))
+              , prod([sort("StrictFP")], sort("InterfaceMod"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/classes/EnumDeclarations")
+    , [imports([module(unparameterized("languages/java-15/lexical/Identifiers")), module(unparameterized("languages/java-15/classes/ClassDeclarations"))])]
+    , [ exports(
+          conc-grammars(
+            sorts(
+              [ sort("EnumDec")
+              , sort("EnumDecHead")
+              , sort("EnumBody")
+              , sort("EnumConst")
+              , sort("EnumConstArgs")
+              , sort("EnumBodyDecs")
+              ]
+            )
+          , context-free-syntax(
+              [ prod(
+                  [sort("EnumDecHead"), sort("EnumBody")]
+                , sort("EnumDec")
+                , attrs([term(cons("EnumDec"))])
+                )
+              , prod(
+                  [ iter-star(alt(sort("Anno"), sort("ClassMod")))
+                  , lit("enum")
+                  , sort("Id")
+                  , opt(sort("Interfaces"))
+                  ]
+                , sort("EnumDecHead")
+                , attrs([term(cons("EnumDecHead"))])
+                )
+              , prod(
+                  [ lit("{")
+                  , iter-star-sep(sort("EnumConst"), lit(","))
+                  , opt(sort("EnumBodyDecs"))
+                  , lit("}")
+                  ]
+                , sort("EnumBody")
+                , attrs([term(cons("EnumBody"))])
+                )
+              , prod(
+                  [ lit("{")
+                  , iter-star-sep(sort("EnumConst"), lit(","))
+                  , lit(",")
+                  , opt(sort("EnumBodyDecs"))
+                  , lit("}")
+                  ]
+                , sort("EnumBody")
+                , attrs([term(cons("EnumBody"))])
+                )
+              , prod(
+                  [sort("Id"), opt(sort("EnumConstArgs")), opt(sort("ClassBody"))]
+                , sort("EnumConst")
+                , attrs([term(cons("EnumConst"))])
+                )
+              , prod(
+                  [lit("("), iter-star-sep(sort("Expr"), lit(",")), lit(")")]
+                , sort("EnumConstArgs")
+                , attrs([bracket()])
+                )
+              , prod(
+                  [lit(";"), iter-star(sort("ClassBodyDec"))]
+                , sort("EnumBodyDecs")
+                , attrs([term(cons("EnumBodyDecs"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/classes/ConstructorDeclarations")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/interfaces/Annotations"))
+          , module(unparameterized("languages/java-15/statements/Main"))
+          , module(unparameterized("languages/java-15/expressions/Main"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts(
+                  [sort("ConstrDec"), sort("ConstrBody"), sort("ConstrHead"), sort("ConstrInv")]
+                )
+              , context-free-syntax(
+                  [ prod(
+                      [sort("ConstrHead"), sort("ConstrBody")]
+                    , sort("ConstrDec")
+                    , attrs([term(cons("ConstrDec"))])
+                    )
+                  , prod(
+                      [ iter-star(alt(sort("Anno"), sort("ConstrMod")))
+                      , opt(sort("TypeParams"))
+                      , sort("Id")
+                      , lit("(")
+                      , iter-star-sep(sort("FormalParam"), lit(","))
+                      , lit(")")
+                      , opt(sort("Throws"))
+                      ]
+                    , sort("ConstrHead")
+                    , attrs([term(cons("ConstrDecHead"))])
+                    )
+                  , prod(
+                      [ lit("{")
+                      , opt(sort("ConstrInv"))
+                      , iter-star(sort("BlockStm"))
+                      , lit("}")
+                      ]
+                    , sort("ConstrBody")
+                    , attrs([term(cons("ConstrBody"))])
+                    )
+                  , prod(
+                      [ opt(sort("TypeArgs"))
+                      , lit("this")
+                      , lit("(")
+                      , iter-star-sep(sort("Expr"), lit(","))
+                      , lit(")")
+                      , lit(";")
+                      ]
+                    , sort("ConstrInv")
+                    , attrs([term(cons("AltConstrInv"))])
+                    )
+                  , prod(
+                      [ opt(sort("TypeArgs"))
+                      , lit("super")
+                      , lit("(")
+                      , iter-star-sep(sort("Expr"), lit(","))
+                      , lit(")")
+                      , lit(";")
+                      ]
+                    , sort("ConstrInv")
+                    , attrs([term(cons("SuperConstrInv"))])
+                    )
+                  , prod(
+                      [ sort("Expr")
+                      , lit(".")
+                      , opt(sort("TypeArgs"))
+                      , lit("super")
+                      , lit("(")
+                      , iter-star-sep(sort("Expr"), lit(","))
+                      , lit(")")
+                      , lit(";")
+                      ]
+                    , sort("ConstrInv")
+                    , attrs([term(cons("QSuperConstrInv"))])
+                    )
+                  ]
+                )
+              )
+            , sorts([sort("ConstrMod")])
+            )
+          , context-free-syntax(
+              [ prod([sort("Public")], sort("ConstrMod"), attrs([]))
+              , prod([sort("Protected")], sort("ConstrMod"), attrs([]))
+              , prod([sort("Private")], sort("ConstrMod"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/classes/StaticInitializers")
+    , [imports([module(unparameterized("languages/java-15/statements/Blocks"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("StaticInit")])
+          , context-free-syntax(
+              [ prod(
+                  [lit("static"), sort("Block")]
+                , sort("StaticInit")
+                , attrs([term(cons("StaticInit"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/classes/InstanceInitializers")
+    , [imports([module(unparameterized("languages/java-15/statements/Blocks"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("InstanceInit")])
+          , context-free-syntax(
+              [ prod(
+                  [sort("Block")]
+                , sort("InstanceInit")
+                , attrs([term(cons("InstanceInit"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/statements/Statements")
+    , [ imports(
+          [module(unparameterized("languages/java-15/statements/LocalVariableDeclarations")), module(unparameterized("languages/java-15/statements/Blocks")), module(unparameterized("languages/java-15/expressions/Main"))]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  conc-grammars(
+                    conc-grammars(
+                      conc-grammars(
+                        conc-grammars(
+                          conc-grammars(
+                            conc-grammars(
+                              conc-grammars(
+                                conc-grammars(
+                                  conc-grammars(
+                                    conc-grammars(
+                                      conc-grammars(
+                                        conc-grammars(
+                                          conc-grammars(
+                                            conc-grammars(
+                                              sorts([sort("Stm")])
+                                            , context-free-syntax(
+                                                [prod([sort("Block")], sort("Stm"), attrs([]))]
+                                              )
+                                            )
+                                          , context-free-syntax(
+                                              [ prod(
+                                                  [lit(";")]
+                                                , sort("Stm")
+                                                , attrs([term(cons("Empty"))])
+                                                )
+                                              ]
+                                            )
+                                          )
+                                        , context-free-syntax(
+                                            [ prod(
+                                                [sort("Id"), lit(":"), sort("Stm")]
+                                              , sort("Stm")
+                                              , attrs([term(cons("Labeled"))])
+                                              )
+                                            ]
+                                          )
+                                        )
+                                      , context-free-syntax(
+                                          [ prod(
+                                              [sort("Expr"), lit(";")]
+                                            , sort("Stm")
+                                            , attrs([term(cons("ExprStm"))])
+                                            )
+                                          ]
+                                        )
+                                      )
+                                    , context-free-syntax(
+                                        [ prod(
+                                            [ lit("if")
+                                            , lit("(")
+                                            , sort("Expr")
+                                            , lit(")")
+                                            , sort("Stm")
+                                            ]
+                                          , sort("Stm")
+                                          , attrs([prefer(), term(cons("If"))])
+                                          )
+                                        , prod(
+                                            [ lit("if")
+                                            , lit("(")
+                                            , sort("Expr")
+                                            , lit(")")
+                                            , sort("Stm")
+                                            , lit("else")
+                                            , sort("Stm")
+                                            ]
+                                          , sort("Stm")
+                                          , attrs([term(cons("If"))])
+                                          )
+                                        ]
+                                      )
+                                    )
+                                  , context-free-syntax(
+                                      [ prod(
+                                          [lit("assert"), sort("Expr"), lit(";")]
+                                        , sort("Stm")
+                                        , attrs([term(cons("AssertStm"))])
+                                        )
+                                      , prod(
+                                          [ lit("assert")
+                                          , sort("Expr")
+                                          , lit(":")
+                                          , sort("Expr")
+                                          , lit(";")
+                                          ]
+                                        , sort("Stm")
+                                        , attrs([term(cons("AssertStm"))])
+                                        )
+                                      ]
+                                    )
+                                  )
+                                , sorts([sort("SwitchBlock"), sort("SwitchGroup"), sort("SwitchLabel")])
+                                )
+                              , context-free-syntax(
+                                  [ prod(
+                                      [ lit("switch")
+                                      , lit("(")
+                                      , sort("Expr")
+                                      , lit(")")
+                                      , sort("SwitchBlock")
+                                      ]
+                                    , sort("Stm")
+                                    , attrs([term(cons("Switch"))])
+                                    )
+                                  , prod(
+                                      [ lit("{")
+                                      , iter-star(sort("SwitchGroup"))
+                                      , iter-star(sort("SwitchLabel"))
+                                      , lit("}")
+                                      ]
+                                    , sort("SwitchBlock")
+                                    , attrs([term(cons("SwitchBlock"))])
+                                    )
+                                  , prod(
+                                      [iter(sort("SwitchLabel")), iter(sort("BlockStm"))]
+                                    , sort("SwitchGroup")
+                                    , attrs([term(cons("SwitchGroup"))])
+                                    )
+                                  , prod(
+                                      [lit("case"), sort("Expr"), lit(":")]
+                                    , sort("SwitchLabel")
+                                    , attrs([term(cons("Case"))])
+                                    )
+                                  , prod(
+                                      [lit("default"), lit(":")]
+                                    , sort("SwitchLabel")
+                                    , attrs([term(cons("Default"))])
+                                    )
+                                  ]
+                                )
+                              )
+                            , context-free-syntax(
+                                [ prod(
+                                    [ lit("while")
+                                    , lit("(")
+                                    , sort("Expr")
+                                    , lit(")")
+                                    , sort("Stm")
+                                    ]
+                                  , sort("Stm")
+                                  , attrs([term(cons("While"))])
+                                  )
+                                ]
+                              )
+                            )
+                          , context-free-syntax(
+                              [ prod(
+                                  [ lit("do")
+                                  , sort("Stm")
+                                  , lit("while")
+                                  , lit("(")
+                                  , sort("Expr")
+                                  , lit(")")
+                                  , lit(";")
+                                  ]
+                                , sort("Stm")
+                                , attrs([term(cons("DoWhile"))])
+                                )
+                              ]
+                            )
+                          )
+                        , context-free-syntax(
+                            [ prod(
+                                [ lit("for")
+                                , lit("(")
+                                , sort("LocalVarDec")
+                                , lit(";")
+                                , opt(sort("Expr"))
+                                , lit(";")
+                                , iter-star-sep(sort("Expr"), lit(","))
+                                , lit(")")
+                                , sort("Stm")
+                                ]
+                              , sort("Stm")
+                              , attrs([term(cons("For"))])
+                              )
+                            , prod(
+                                [ lit("for")
+                                , lit("(")
+                                , iter-star-sep(sort("Expr"), lit(","))
+                                , lit(";")
+                                , opt(sort("Expr"))
+                                , lit(";")
+                                , iter-star-sep(sort("Expr"), lit(","))
+                                , lit(")")
+                                , sort("Stm")
+                                ]
+                              , sort("Stm")
+                              , attrs([term(cons("For"))])
+                              )
+                            , prod(
+                                [ lit("for")
+                                , lit("(")
+                                , sort("FormalParam")
+                                , lit(":")
+                                , sort("Expr")
+                                , lit(")")
+                                , sort("Stm")
+                                ]
+                              , sort("Stm")
+                              , attrs([term(cons("ForEach"))])
+                              )
+                            ]
+                          )
+                        )
+                      , context-free-syntax(
+                          [ prod(
+                              [lit("break"), opt(sort("Id")), lit(";")]
+                            , sort("Stm")
+                            , attrs([term(cons("Break"))])
+                            )
+                          ]
+                        )
+                      )
+                    , context-free-syntax(
+                        [ prod(
+                            [lit("continue"), opt(sort("Id")), lit(";")]
+                          , sort("Stm")
+                          , attrs([term(cons("Continue"))])
+                          )
+                        ]
+                      )
+                    )
+                  , context-free-syntax(
+                      [ prod(
+                          [lit("return"), opt(sort("Expr")), lit(";")]
+                        , sort("Stm")
+                        , attrs([term(cons("Return"))])
+                        )
+                      ]
+                    )
+                  )
+                , context-free-syntax(
+                    [ prod(
+                        [lit("throw"), sort("Expr"), lit(";")]
+                      , sort("Stm")
+                      , attrs([term(cons("Throw"))])
+                      )
+                    ]
+                  )
+                )
+              , context-free-syntax(
+                  [ prod(
+                      [ lit("synchronized")
+                      , lit("(")
+                      , sort("Expr")
+                      , lit(")")
+                      , sort("Block")
+                      ]
+                    , sort("Stm")
+                    , attrs([term(cons("Synchronized"))])
+                    )
+                  ]
+                )
+              )
+            , sorts([sort("CatchClause")])
+            )
+          , context-free-syntax(
+              [ prod(
+                  [lit("try"), sort("Block"), iter(sort("CatchClause"))]
+                , sort("Stm")
+                , attrs([term(cons("Try"))])
+                )
+              , prod(
+                  [ lit("try")
+                  , sort("Block")
+                  , iter-star(sort("CatchClause"))
+                  , lit("finally")
+                  , sort("Block")
+                  ]
+                , sort("Stm")
+                , attrs([term(cons("Try"))])
+                )
+              , prod(
+                  [ lit("catch")
+                  , lit("(")
+                  , sort("FormalParam")
+                  , lit(")")
+                  , sort("Block")
+                  ]
+                , sort("CatchClause")
+                , attrs([term(cons("Catch"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/statements/LocalVariableDeclarations")
+    , [imports([module(unparameterized("languages/java-15/classes/MethodDeclarations")), module(unparameterized("languages/java-15/classes/FieldDeclarations"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("LocalVarDecStm"), sort("LocalVarDec")])
+          , context-free-syntax(
+              [ prod(
+                  [sort("LocalVarDec"), lit(";")]
+                , sort("LocalVarDecStm")
+                , attrs([prefer(), term(cons("LocalVarDecStm"))])
+                )
+              , prod(
+                  [ iter-star(alt(sort("Anno"), sort("VarMod")))
+                  , sort("Type")
+                  , iter-sep(sort("VarDec"), lit(","))
+                  ]
+                , sort("LocalVarDec")
+                , attrs([prefer(), term(cons("LocalVarDec"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/statements/Blocks")
+    , [ imports(
+          [module(unparameterized("languages/java-15/classes/ClassDeclarations")), module(unparameterized("languages/java-15/statements/LocalVariableDeclarations")), module(unparameterized("languages/java-15/statements/Statements"))]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("BlockStm"), sort("Block")])
+          , context-free-syntax(
+              [ prod(
+                  [lit("{"), iter-star(sort("BlockStm")), lit("}")]
+                , sort("Block")
+                , attrs([term(cons("Block"))])
+                )
+              , prod([sort("LocalVarDecStm")], sort("BlockStm"), attrs([]))
+              , prod(
+                  [sort("ClassDec")]
+                , sort("BlockStm")
+                , attrs([term(cons("ClassDecStm"))])
+                )
+              , prod([sort("Stm")], sort("BlockStm"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/classes/MethodDeclarations")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/types/Main"))
+          , module(unparameterized("languages/java-15/classes/FieldDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/Annotations"))
+          , module(unparameterized("languages/java-15/statements/Blocks"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  conc-grammars(
+                    conc-grammars(
+                      conc-grammars(
+                        conc-grammars(
+                          conc-grammars(
+                            conc-grammars(
+                              conc-grammars(
+                                sorts([sort("MethodDec"), sort("MethodDecHead"), sort("ResultType")])
+                              , context-free-syntax(
+                                  [ prod(
+                                      [sort("MethodDecHead"), sort("MethodBody")]
+                                    , sort("MethodDec")
+                                    , attrs([term(cons("MethodDec"))])
+                                    )
+                                  , prod(
+                                      [ iter-star(alt(sort("Anno"), sort("MethodMod")))
+                                      , opt(sort("TypeParams"))
+                                      , sort("ResultType")
+                                      , sort("Id")
+                                      , lit("(")
+                                      , iter-star-sep(sort("FormalParam"), lit(","))
+                                      , lit(")")
+                                      , opt(sort("Throws"))
+                                      ]
+                                    , sort("MethodDecHead")
+                                    , attrs([term(cons("MethodDecHead"))])
+                                    )
+                                  , prod(
+                                      [ iter-star(alt(sort("Anno"), sort("MethodMod")))
+                                      , opt(sort("TypeParams"))
+                                      , sort("ResultType")
+                                      , sort("Id")
+                                      , lit("(")
+                                      , iter-star-sep(sort("FormalParam"), lit(","))
+                                      , lit(")")
+                                      , iter(sort("Dim"))
+                                      , opt(sort("Throws"))
+                                      ]
+                                    , sort("MethodDecHead")
+                                    , attrs([term(cons("DeprMethodDecHead"))])
+                                    )
+                                  , prod([sort("Type")], sort("ResultType"), attrs([]))
+                                  , prod(
+                                      [lit("void")]
+                                    , sort("ResultType")
+                                    , attrs([term(cons("Void"))])
+                                    )
+                                  ]
+                                )
+                              )
+                            , sorts([sort("FormalParam")])
+                            )
+                          , context-free-syntax(
+                              [ prod(
+                                  [ iter-star(alt(sort("Anno"), sort("VarMod")))
+                                  , sort("Type")
+                                  , sort("VarDecId")
+                                  ]
+                                , sort("FormalParam")
+                                , attrs([term(cons("Param"))])
+                                )
+                              , prod(
+                                  [ iter-star(alt(sort("Anno"), sort("VarMod")))
+                                  , sort("Type")
+                                  , lit("...")
+                                  , sort("VarDecId")
+                                  ]
+                                , sort("FormalParam")
+                                , attrs([term(cons("VarArityParam"))])
+                                )
+                              ]
+                            )
+                          )
+                        , sorts([sort("VarMod")])
+                        )
+                      , context-free-syntax(
+                          [prod([sort("Final")], sort("VarMod"), attrs([]))]
+                        )
+                      )
+                    , sorts([sort("MethodMod")])
+                    )
+                  , context-free-syntax(
+                      [ prod([sort("Public")], sort("MethodMod"), attrs([]))
+                      , prod([sort("Protected")], sort("MethodMod"), attrs([]))
+                      , prod([sort("Private")], sort("MethodMod"), attrs([]))
+                      , prod([sort("Abstract")], sort("MethodMod"), attrs([]))
+                      , prod([sort("Static")], sort("MethodMod"), attrs([]))
+                      , prod([sort("Final")], sort("MethodMod"), attrs([]))
+                      , prod([sort("Synchronized")], sort("MethodMod"), attrs([]))
+                      , prod([sort("Native")], sort("MethodMod"), attrs([]))
+                      , prod([sort("StrictFP")], sort("MethodMod"), attrs([]))
+                      ]
+                    )
+                  )
+                , sorts([sort("Throws"), sort("ExceptionType")])
+                )
+              , context-free-syntax(
+                  [ prod(
+                      [lit("throws"), iter-sep(sort("ExceptionType"), lit(","))]
+                    , sort("Throws")
+                    , attrs([term(cons("ThrowsDec"))])
+                    )
+                  , prod([sort("ClassType")], sort("ExceptionType"), attrs([]))
+                  ]
+                )
+              )
+            , sorts([sort("MethodBody")])
+            )
+          , context-free-syntax(
+              [ prod([sort("Block")], sort("MethodBody"), attrs([]))
+              , prod(
+                  [lit(";")]
+                , sort("MethodBody")
+                , attrs([term(cons("NoMethodBody"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/arrays/ArrayInitializers")
+    , [imports([module(unparameterized("languages/java-15/classes/FieldDeclarations"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("ArrayInit")])
+          , context-free-syntax(
+              [ prod(
+                  [lit("{"), iter-star-sep(sort("VarInit"), lit(",")), lit("}")]
+                , sort("ArrayInit")
+                , attrs([term(cons("ArrayInit"))])
+                )
+              , prod(
+                  [ lit("{")
+                  , iter-star-sep(sort("VarInit"), lit(","))
+                  , lit(",")
+                  , lit("}")
+                  ]
+                , sort("ArrayInit")
+                , attrs([term(cons("ArrayInit"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/interfaces/Annotations")
+    , [ imports(
+          [module(unparameterized("languages/java-15/lexical/Identifiers")), module(unparameterized("languages/java-15/names/Main")), module(unparameterized("languages/java-15/expressions/Main"))]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              sorts([sort("Anno"), sort("ElemVal"), sort("ElemValPair")])
+            , context-free-syntax(
+                [ prod(
+                    [ lit("@")
+                    , sort("TypeName")
+                    , lit("(")
+                    , iter-star-sep(sort("ElemValPair"), lit(","))
+                    , lit(")")
+                    ]
+                  , sort("Anno")
+                  , attrs([term(cons("Anno"))])
+                  )
+                , prod(
+                    [ lit("@")
+                    , sort("TypeName")
+                    , lit("(")
+                    , sort("ElemVal")
+                    , lit(")")
+                    ]
+                  , sort("Anno")
+                  , attrs([term(cons("SingleElemAnno"))])
+                  )
+                , prod(
+                    [lit("@"), sort("TypeName")]
+                  , sort("Anno")
+                  , attrs([term(cons("MarkerAnno"))])
+                  )
+                ]
+              )
+            )
+          , context-free-syntax(
+              [ prod(
+                  [sort("Id"), lit("="), sort("ElemVal")]
+                , sort("ElemValPair")
+                , attrs([term(cons("ElemValPair"))])
+                )
+              , prod([sort("Expr")], sort("ElemVal"), attrs([]))
+              , prod([sort("Anno")], sort("ElemVal"), attrs([]))
+              , prod(
+                  [lit("{"), iter-star-sep(sort("ElemVal"), lit(",")), lit("}")]
+                , sort("ElemVal")
+                , attrs([term(cons("ElemValArrayInit"))])
+                )
+              , prod(
+                  [ lit("{")
+                  , iter-star-sep(sort("ElemVal"), lit(","))
+                  , lit(",")
+                  , lit("}")
+                  ]
+                , sort("ElemVal")
+                , attrs([term(cons("ElemValArrayInit"))])
+                )
+              , prod(
+                  [sort("LHS"), lit("="), sort("Expr")]
+                , sort("ElemVal")
+                , attrs([reject()])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/classes/FieldDeclarations")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/types/Main"))
+          , module(unparameterized("languages/java-15/interfaces/Annotations"))
+          , module(unparameterized("languages/java-15/arrays/ArrayInitializers"))
+          , module(unparameterized("languages/java-15/expressions/Main"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts(
+                  [ sort("FieldDec")
+                  , sort("VarDec")
+                  , sort("VarDecId")
+                  , sort("Dim")
+                  , sort("VarInit")
+                  ]
+                )
+              , context-free-syntax(
+                  [ prod(
+                      [ iter-star(alt(sort("Anno"), sort("FieldMod")))
+                      , sort("Type")
+                      , iter-sep(sort("VarDec"), lit(","))
+                      , lit(";")
+                      ]
+                    , sort("FieldDec")
+                    , attrs([term(cons("FieldDec"))])
+                    )
+                  , prod(
+                      [sort("VarDecId")]
+                    , sort("VarDec")
+                    , attrs([term(cons("VarDec"))])
+                    )
+                  , prod(
+                      [sort("VarDecId"), lit("="), sort("VarInit")]
+                    , sort("VarDec")
+                    , attrs([term(cons("VarDec"))])
+                    )
+                  , prod([sort("Id")], sort("VarDecId"), attrs([]))
+                  , prod(
+                      [sort("Id"), iter(sort("Dim"))]
+                    , sort("VarDecId")
+                    , attrs([term(cons("ArrayVarDecId"))])
+                    )
+                  , prod(
+                      [lit("["), lit("]")]
+                    , sort("Dim")
+                    , attrs([term(cons("Dim"))])
+                    )
+                  , prod([sort("Expr")], sort("VarInit"), attrs([]))
+                  , prod([sort("ArrayInit")], sort("VarInit"), attrs([]))
+                  ]
+                )
+              )
+            , sorts([sort("FieldMod")])
+            )
+          , context-free-syntax(
+              [ prod([sort("Public")], sort("FieldMod"), attrs([]))
+              , prod([sort("Protected")], sort("FieldMod"), attrs([]))
+              , prod([sort("Private")], sort("FieldMod"), attrs([]))
+              , prod([sort("Static")], sort("FieldMod"), attrs([]))
+              , prod([sort("Final")], sort("FieldMod"), attrs([]))
+              , prod([sort("Transient")], sort("FieldMod"), attrs([]))
+              , prod([sort("Volatile")], sort("FieldMod"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/classes/ClassDeclarations")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/types/ReferenceTypes"))
+          , module(unparameterized("languages/java-15/types/TypeVariables"))
+          , module(unparameterized("languages/java-15/classes/FieldDeclarations"))
+          , module(unparameterized("languages/java-15/classes/MethodDeclarations"))
+          , module(unparameterized("languages/java-15/classes/InstanceInitializers"))
+          , module(unparameterized("languages/java-15/classes/StaticInitializers"))
+          , module(unparameterized("languages/java-15/classes/ConstructorDeclarations"))
+          , module(unparameterized("languages/java-15/classes/EnumDeclarations"))
+          , module(unparameterized("languages/java-15/interfaces/InterfaceDeclarations"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  conc-grammars(
+                    conc-grammars(
+                      conc-grammars(
+                        conc-grammars(
+                          conc-grammars(
+                            conc-grammars(
+                              sorts([sort("ClassDec"), sort("ClassBody"), sort("ClassDecHead")])
+                            , context-free-syntax(
+                                [ prod([sort("EnumDec")], sort("ClassDec"), attrs([]))
+                                , prod(
+                                    [sort("ClassDecHead"), sort("ClassBody")]
+                                  , sort("ClassDec")
+                                  , attrs([term(cons("ClassDec"))])
+                                  )
+                                , prod(
+                                    [lit("{"), iter-star(sort("ClassBodyDec")), lit("}")]
+                                  , sort("ClassBody")
+                                  , attrs([term(cons("ClassBody"))])
+                                  )
+                                , prod(
+                                    [ iter-star(alt(sort("Anno"), sort("ClassMod")))
+                                    , lit("class")
+                                    , sort("Id")
+                                    , opt(sort("TypeParams"))
+                                    , opt(sort("Super"))
+                                    , opt(sort("Interfaces"))
+                                    ]
+                                  , sort("ClassDecHead")
+                                  , attrs([term(cons("ClassDecHead"))])
+                                  )
+                                ]
+                              )
+                            )
+                          , sorts([sort("ClassMod")])
+                          )
+                        , context-free-syntax(
+                            [ prod([sort("Abstract")], sort("ClassMod"), attrs([]))
+                            , prod([sort("Public")], sort("ClassMod"), attrs([]))
+                            , prod([sort("Protected")], sort("ClassMod"), attrs([]))
+                            , prod([sort("Private")], sort("ClassMod"), attrs([]))
+                            , prod([sort("Static")], sort("ClassMod"), attrs([]))
+                            , prod([sort("Final")], sort("ClassMod"), attrs([]))
+                            , prod([sort("StrictFP")], sort("ClassMod"), attrs([]))
+                            ]
+                          )
+                        )
+                      , sorts([sort("Super")])
+                      )
+                    , context-free-syntax(
+                        [ prod(
+                            [lit("extends"), sort("ClassType")]
+                          , sort("Super")
+                          , attrs([term(cons("SuperDec"))])
+                          )
+                        ]
+                      )
+                    )
+                  , sorts([sort("Interfaces")])
+                  )
+                , context-free-syntax(
+                    [ prod(
+                        [lit("implements"), iter-sep(sort("InterfaceType"), lit(","))]
+                      , sort("Interfaces")
+                      , attrs([term(cons("ImplementsDec"))])
+                      )
+                    ]
+                  )
+                )
+              , sorts([sort("ClassBodyDec"), sort("ClassMemberDec")])
+              )
+            , context-free-syntax(
+                [ prod([sort("ClassMemberDec")], sort("ClassBodyDec"), attrs([]))
+                , prod([sort("InstanceInit")], sort("ClassBodyDec"), attrs([]))
+                , prod([sort("StaticInit")], sort("ClassBodyDec"), attrs([]))
+                , prod([sort("ConstrDec")], sort("ClassBodyDec"), attrs([]))
+                ]
+              )
+            )
+          , context-free-syntax(
+              [ prod([sort("FieldDec")], sort("ClassMemberDec"), attrs([]))
+              , prod([sort("MethodDec")], sort("ClassMemberDec"), attrs([]))
+              , prod([sort("ClassDec")], sort("ClassMemberDec"), attrs([]))
+              , prod([sort("InterfaceDec")], sort("ClassMemberDec"), attrs([]))
+              , prod(
+                  [lit(";")]
+                , sort("ClassMemberDec")
+                , attrs([term(cons("Semicolon"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/packages/TypeDeclarations")
+    , [imports([module(unparameterized("languages/java-15/classes/ClassDeclarations")), module(unparameterized("languages/java-15/interfaces/InterfaceDeclarations"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("TypeDec")])
+          , context-free-syntax(
+              [ prod([sort("ClassDec")], sort("TypeDec"), attrs([]))
+              , prod([sort("InterfaceDec")], sort("TypeDec"), attrs([]))
+              , prod(
+                  [lit(";")]
+                , sort("TypeDec")
+                , attrs([term(cons("Semicolon"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/packages/CompilationUnits")
+    , [ imports(
+          [module(unparameterized("languages/java-15/packages/PackageDeclarations")), module(unparameterized("languages/java-15/packages/ImportDeclarations")), module(unparameterized("languages/java-15/packages/TypeDeclarations"))]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("CompilationUnit")])
+          , context-free-syntax(
+              [ prod(
+                  [opt(sort("PackageDec")), iter-star(sort("ImportDec")), iter(sort("TypeDec"))]
+                , sort("CompilationUnit")
+                , attrs([term(cons("CompilationUnit"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/packages/Main")
+    , [ imports(
+          [module(unparameterized("languages/java-15/packages/CompilationUnits")), module(unparameterized("languages/java-15/packages/ImportDeclarations")), module(unparameterized("languages/java-15/packages/PackageDeclarations"))]
+        )
+      ]
+    , []
+    )
+  , module(
+      unparameterized("languages/java-15/names/Main")
+    , [imports([module(unparameterized("languages/java-15/lexical/Identifiers"))])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts([sort("PackageName")])
+              , context-free-syntax(
+                  [ prod(
+                      [iter-sep(sort("Id"), lit("."))]
+                    , sort("PackageName")
+                    , attrs([term(cons("PackageName"))])
+                    )
+                  ]
+                )
+              )
+            , sorts(
+                [ sort("TypeName")
+                , sort("ExprName")
+                , sort("MethodName")
+                , sort("PackageOrTypeName")
+                , sort("AmbName")
+                ]
+              )
+            )
+          , context-free-syntax(
+              [ prod(
+                  [sort("Id")]
+                , sort("AmbName")
+                , attrs([term(cons("AmbName"))])
+                )
+              , prod(
+                  [sort("AmbName"), lit("."), sort("Id")]
+                , sort("AmbName")
+                , attrs([term(cons("AmbName"))])
+                )
+              , prod(
+                  [sort("Id")]
+                , sort("TypeName")
+                , attrs([term(cons("TypeName"))])
+                )
+              , prod(
+                  [sort("PackageOrTypeName"), lit("."), sort("Id")]
+                , sort("TypeName")
+                , attrs([term(cons("TypeName"))])
+                )
+              , prod(
+                  [sort("Id")]
+                , sort("ExprName")
+                , attrs([term(cons("ExprName"))])
+                )
+              , prod(
+                  [sort("AmbName"), lit("."), sort("Id")]
+                , sort("ExprName")
+                , attrs([term(cons("ExprName"))])
+                )
+              , prod(
+                  [sort("Id")]
+                , sort("MethodName")
+                , attrs([term(cons("MethodName"))])
+                )
+              , prod(
+                  [sort("AmbName"), lit("."), sort("Id")]
+                , sort("MethodName")
+                , attrs([term(cons("MethodName"))])
+                )
+              , prod(
+                  [sort("Id")]
+                , sort("PackageOrTypeName")
+                , attrs([term(cons("PackageOrTypeName"))])
+                )
+              , prod(
+                  [sort("PackageOrTypeName"), lit("."), sort("Id")]
+                , sort("PackageOrTypeName")
+                , attrs([term(cons("PackageOrTypeName"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/types/ParameterizedTypes")
+    , [imports([module(unparameterized("languages/java-15/types/ReferenceTypes"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("TypeArgs"), sort("ActualTypeArg"), sort("WildcardBound")])
+          , context-free-syntax(
+              [ prod(
+                  [lit("<"), iter-sep(sort("ActualTypeArg"), lit(",")), lit(">")]
+                , sort("TypeArgs")
+                , attrs([term(cons("TypeArgs"))])
+                )
+              , prod([sort("Type")], sort("ActualTypeArg"), attrs([]))
+              , prod(
+                  [lit("?"), opt(sort("WildcardBound"))]
+                , sort("ActualTypeArg")
+                , attrs([term(cons("Wildcard"))])
+                )
+              , prod(
+                  [lit("extends"), sort("RefType")]
+                , sort("WildcardBound")
+                , attrs([term(cons("WildcardUpperBound"))])
+                )
+              , prod(
+                  [lit("super"), sort("RefType")]
+                , sort("WildcardBound")
+                , attrs([term(cons("WildcardLowerBound"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/types/TypeVariables")
+    , [imports([module(unparameterized("languages/java-15/lexical/Identifiers")), module(unparameterized("languages/java-15/types/ReferenceTypes"))])]
+    , [ exports(
+          conc-grammars(
+            sorts(
+              [sort("TypeParams"), sort("TypeParam"), sort("TypeBound"), sort("TypeVarId")]
+            )
+          , context-free-syntax(
+              [ prod(
+                  [sort("TypeVarId"), opt(sort("TypeBound"))]
+                , sort("TypeParam")
+                , attrs([term(cons("TypeParam"))])
+                )
+              , prod(
+                  [lit("extends"), iter-sep(sort("ClassOrInterfaceType"), lit("&"))]
+                , sort("TypeBound")
+                , attrs([term(cons("TypeBound"))])
+                )
+              , prod(
+                  [lit("<"), iter-sep(sort("TypeParam"), lit(",")), lit(">")]
+                , sort("TypeParams")
+                , attrs([term(cons("TypeParams"))])
+                )
+              , prod([sort("Id")], sort("TypeVarId"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/types/ReferenceTypes")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/names/Main"))
+          , module(unparameterized("languages/java-15/types/Main"))
+          , module(unparameterized("languages/java-15/types/ParameterizedTypes"))
+          , module(unparameterized("languages/java-15/types/TypeVariables"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  sorts(
+                    [ sort("RefType")
+                    , sort("ClassOrInterfaceType")
+                    , sort("ClassType")
+                    , sort("InterfaceType")
+                    , sort("TypeDecSpec")
+                    , sort("ArrayType")
+                    , sort("TypeVar")
+                    ]
+                  )
+                , context-free-syntax(
+                    [ prod([sort("ClassOrInterfaceType")], sort("RefType"), attrs([]))
+                    , prod([sort("ArrayType")], sort("RefType"), attrs([]))
+                    ]
+                  )
+                )
+              , context-free-syntax(
+                  [ prod(
+                      [sort("TypeDecSpec"), opt(sort("TypeArgs"))]
+                    , sort("ClassOrInterfaceType")
+                    , attrs([term(cons("ClassOrInterfaceType"))])
+                    )
+                  , prod(
+                      [sort("TypeDecSpec"), opt(sort("TypeArgs"))]
+                    , sort("ClassType")
+                    , attrs([term(cons("ClassType"))])
+                    )
+                  , prod(
+                      [sort("TypeDecSpec"), opt(sort("TypeArgs"))]
+                    , sort("InterfaceType")
+                    , attrs([term(cons("InterfaceType"))])
+                    )
+                  , prod([sort("TypeName")], sort("TypeDecSpec"), attrs([]))
+                  , prod(
+                      [sort("TypeDecSpec"), sort("TypeArgs"), lit("."), sort("Id")]
+                    , sort("TypeDecSpec")
+                    , attrs([term(cons("Member"))])
+                    )
+                  ]
+                )
+              )
+            , context-free-syntax(
+                [ prod(
+                    [sort("TypeVarId")]
+                  , sort("TypeVar")
+                  , attrs([term(cons("TypeVar"))])
+                  )
+                ]
+              )
+            )
+          , context-free-syntax(
+              [ prod(
+                  [sort("Type"), lit("["), lit("]")]
+                , sort("ArrayType")
+                , attrs([term(cons("ArrayType"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/types/PrimitiveTypes")
+    , []
+    , [ exports(
+          conc-grammars(
+            sorts(
+              [sort("PrimType"), sort("NumType"), sort("IntType"), sort("FloatType")]
+            )
+          , context-free-syntax(
+              [ prod([sort("NumType")], sort("PrimType"), attrs([]))
+              , prod(
+                  [lit("boolean")]
+                , sort("PrimType")
+                , attrs([term(cons("Boolean"))])
+                )
+              , prod([sort("IntType")], sort("NumType"), attrs([]))
+              , prod([sort("FloatType")], sort("NumType"), attrs([]))
+              , prod(
+                  [lit("byte")]
+                , sort("IntType")
+                , attrs([term(cons("Byte"))])
+                )
+              , prod(
+                  [lit("short")]
+                , sort("IntType")
+                , attrs([term(cons("Short"))])
+                )
+              , prod(
+                  [lit("int")]
+                , sort("IntType")
+                , attrs([term(cons("Int"))])
+                )
+              , prod(
+                  [lit("long")]
+                , sort("IntType")
+                , attrs([term(cons("Long"))])
+                )
+              , prod(
+                  [lit("char")]
+                , sort("IntType")
+                , attrs([term(cons("Char"))])
+                )
+              , prod(
+                  [lit("float")]
+                , sort("FloatType")
+                , attrs([term(cons("Float"))])
+                )
+              , prod(
+                  [lit("double")]
+                , sort("FloatType")
+                , attrs([term(cons("Double"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/types/Main")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/types/PrimitiveTypes"))
+          , module(unparameterized("languages/java-15/types/ReferenceTypes"))
+          , module(unparameterized("languages/java-15/types/TypeVariables"))
+          , module(unparameterized("languages/java-15/types/ParameterizedTypes"))
+          ]
+        )
+      ]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("Type")])
+          , context-free-syntax(
+              [ prod([sort("PrimType")], sort("Type"), attrs([]))
+              , prod([sort("RefType")], sort("Type"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/NullLiteral")
+    , []
+    , [ exports(
+          conc-grammars(
+            sorts([sort("NullLiteral")])
+          , context-free-syntax(
+              [ prod(
+                  [lit("null")]
+                , sort("NullLiteral")
+                , attrs([term(cons("Null"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/StringLiterals")
+    , [imports([module(unparameterized("languages/java-15/lexical/literals/EscapeSequences")), module(unparameterized("languages/java-15/lexical/UnicodeEscapes"))])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              sorts(
+                [sort("StringLiteral"), sort("StringPart"), sort("StringChars"), sort("FooStringChars")]
+              )
+            , syntax(
+                [ prod(
+                    [sort("StringLiteral")]
+                  , cf(sort("StringLiteral"))
+                  , attrs([])
+                  )
+                , prod(
+                    [lit("\\\""), iter-star(sort("StringPart")), lit("\\\"")]
+                  , sort("StringLiteral")
+                  , attrs([term(cons("String"))])
+                  )
+                , prod(
+                    [sort("StringChars")]
+                  , sort("StringPart")
+                  , attrs([term(cons("Chars"))])
+                  )
+                , prod([sort("UnicodeEscape")], sort("StringPart"), attrs([]))
+                , prod([sort("EscapeSeq")], sort("StringPart"), attrs([]))
+                , prod(
+                    [lex(sort("FooStringChars"))]
+                  , sort("StringChars")
+                  , attrs([])
+                  )
+                , prod(
+                    [ iter(
+                        char-class(
+                          comp(
+                            simple-charclass(
+                              present(
+                                conc(
+                                  short("\\\"")
+                                , conc(short("\\\\"), conc(short("\\n"), numeric("\\13")))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  , lex(sort("FooStringChars"))
+                  , attrs([])
+                  )
+                ]
+              )
+            )
+          , restrictions(
+              [ follow(
+                  [sort("StringChars")]
+                , single(
+                    char-class(
+                      comp(
+                        simple-charclass(
+                          present(
+                            conc(
+                              short("\\\"")
+                            , conc(short("\\\\"), conc(short("\\n"), numeric("\\13")))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/EscapeSequences")
+    , [imports([])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              sorts(
+                [sort("EscapeSeq"), sort("NamedEscape"), sort("OctaEscape"), sort("LastOcta")]
+              )
+            , syntax(
+                [ prod([sort("OctaEscape")], sort("EscapeSeq"), attrs([]))
+                , prod([sort("NamedEscape")], sort("EscapeSeq"), attrs([]))
+                , prod(
+                    [ lit("\\\\")
+                    , char-class(
+                        simple-charclass(
+                          present(
+                            conc(
+                              short("b")
+                            , conc(
+                                short("t")
+                              , conc(
+                                  short("n")
+                                , conc(
+                                    short("f")
+                                  , conc(
+                                      short("r")
+                                    , conc(short("\\\""), conc(short("\\'"), short("\\\\")))
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  , sort("NamedEscape")
+                  , attrs([term(cons("NamedEscape"))])
+                  )
+                , prod(
+                    [lit("\\\\"), sort("LastOcta")]
+                  , sort("OctaEscape")
+                  , attrs([term(cons("OctaEscape1"))])
+                  )
+                , prod(
+                    [ lit("\\\\")
+                    , char-class(simple-charclass(present(range(short("0"), short("3")))))
+                    , sort("LastOcta")
+                    ]
+                  , sort("OctaEscape")
+                  , attrs([term(cons("OctaEscape2"))])
+                  )
+                , prod(
+                    [ lit("\\\\")
+                    , char-class(simple-charclass(present(range(short("4"), short("7")))))
+                    , char-class(simple-charclass(present(range(short("0"), short("7")))))
+                    ]
+                  , sort("OctaEscape")
+                  , attrs([term(cons("OctaEscape2"))])
+                  )
+                , prod(
+                    [ lit("\\\\")
+                    , char-class(simple-charclass(present(range(short("0"), short("3")))))
+                    , char-class(simple-charclass(present(range(short("0"), short("7")))))
+                    , char-class(simple-charclass(present(range(short("0"), short("7")))))
+                    ]
+                  , sort("OctaEscape")
+                  , attrs([term(cons("OctaEscape3"))])
+                  )
+                , prod(
+                    [char-class(simple-charclass(present(range(short("0"), short("7")))))]
+                  , sort("LastOcta")
+                  , attrs([])
+                  )
+                ]
+              )
+            )
+          , restrictions(
+              [ follow(
+                  [sort("LastOcta")]
+                , single(
+                    char-class(simple-charclass(present(range(short("0"), short("7")))))
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/CharacterLiterals")
+    , [imports([module(unparameterized("languages/java-15/lexical/literals/EscapeSequences")), module(unparameterized("languages/java-15/lexical/UnicodeEscapes"))])]
+    , [ exports(
+          conc-grammars(
+            sorts([sort("CharLiteral"), sort("CharContent"), sort("SingleChar")])
+          , syntax(
+              [ prod(
+                  [sort("CharLiteral")]
+                , cf(sort("CharLiteral"))
+                , attrs([])
+                )
+              , prod(
+                  [lit("'"), sort("CharContent"), lit("'")]
+                , sort("CharLiteral")
+                , attrs([term(cons("Char"))])
+                )
+              , prod(
+                  [sort("SingleChar")]
+                , sort("CharContent")
+                , attrs([term(cons("Single"))])
+                )
+              , prod([sort("UnicodeEscape")], sort("CharContent"), attrs([]))
+              , prod([sort("EscapeSeq")], sort("CharContent"), attrs([]))
+              , prod(
+                  [ char-class(
+                      comp(
+                        simple-charclass(
+                          present(
+                            conc(
+                              short("\\r")
+                            , conc(short("\\n"), conc(short("\\'"), short("\\\\")))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  ]
+                , sort("SingleChar")
+                , attrs([])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/BooleanLiterals")
+    , []
+    , [ exports(
+          conc-grammars(
+            sorts([sort("Bool"), sort("BoolLiteral")])
+          , context-free-syntax(
+              [ prod(
+                  [sort("Bool")]
+                , sort("BoolLiteral")
+                , attrs([term(cons("Bool"))])
+                )
+              , prod(
+                  [lit("true")]
+                , sort("Bool")
+                , attrs([term(cons("True"))])
+                )
+              , prod(
+                  [lit("false")]
+                , sort("Bool")
+                , attrs([term(cons("False"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/FloatingPointLiterals")
+    , []
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  conc-grammars(
+                    conc-grammars(
+                      conc-grammars(
+                        conc-grammars(
+                          conc-grammars(
+                            sorts([sort("FloatLiteral"), sort("DeciFloatLiteral"), sort("HexaFloatLiteral")])
+                          , context-free-syntax(
+                              [ prod(
+                                  [sort("DeciFloatLiteral")]
+                                , sort("FloatLiteral")
+                                , attrs([term(cons("Float"))])
+                                )
+                              , prod(
+                                  [sort("HexaFloatLiteral")]
+                                , sort("FloatLiteral")
+                                , attrs([term(cons("Float"))])
+                                )
+                              ]
+                            )
+                          )
+                        , lexical-syntax(
+                            [ prod(
+                                [ sort("DeciFloatNumeral")
+                                , opt(
+                                    char-class(
+                                      simple-charclass(
+                                        present(
+                                          conc(
+                                            short("f")
+                                          , conc(short("F"), conc(short("d"), short("D")))
+                                          )
+                                        )
+                                      )
+                                    )
+                                  )
+                                ]
+                              , sort("DeciFloatLiteral")
+                              , attrs([])
+                              )
+                            , prod(
+                                [ sort("HexaFloatNumeral")
+                                , opt(
+                                    char-class(
+                                      simple-charclass(
+                                        present(
+                                          conc(
+                                            short("f")
+                                          , conc(short("F"), conc(short("d"), short("D")))
+                                          )
+                                        )
+                                      )
+                                    )
+                                  )
+                                ]
+                              , sort("HexaFloatLiteral")
+                              , attrs([])
+                              )
+                            , prod(
+                                [iter(
+                                   char-class(simple-charclass(present(range(short("0"), short("9")))))
+                                 )]
+                              , sort("DeciFloatLiteral")
+                              , attrs([reject()])
+                              )
+                            ]
+                          )
+                        )
+                      , lexical-restrictions(
+                          [ follow(
+                              [sort("DeciFloatLiteral")]
+                            , single(
+                                char-class(
+                                  simple-charclass(
+                                    present(
+                                      conc(
+                                        short("f")
+                                      , conc(short("F"), conc(short("d"), short("D")))
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          , follow(
+                              [sort("HexaFloatLiteral")]
+                            , single(
+                                char-class(
+                                  simple-charclass(
+                                    present(
+                                      conc(
+                                        short("f")
+                                      , conc(short("F"), conc(short("d"), short("D")))
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , sorts([sort("DeciFloatNumeral"), sort("DeciFloatDigits"), sort("DeciFloatExponentPart")])
+                    )
+                  , lexical-syntax(
+                      [ prod(
+                          [sort("DeciFloatDigits"), opt(sort("DeciFloatExponentPart"))]
+                        , sort("DeciFloatNumeral")
+                        , attrs([])
+                        )
+                      , prod(
+                          [ iter-star(
+                              char-class(simple-charclass(present(range(short("0"), short("9")))))
+                            )
+                          , lit(".")
+                          , iter-star(
+                              char-class(simple-charclass(present(range(short("0"), short("9")))))
+                            )
+                          ]
+                        , sort("DeciFloatDigits")
+                        , attrs([])
+                        )
+                      , prod(
+                          [lit(".")]
+                        , sort("DeciFloatDigits")
+                        , attrs([reject()])
+                        )
+                      , prod(
+                          [iter(
+                             char-class(simple-charclass(present(range(short("0"), short("9")))))
+                           )]
+                        , sort("DeciFloatDigits")
+                        , attrs([])
+                        )
+                      , prod(
+                          [ char-class(simple-charclass(present(conc(short("e"), short("E")))))
+                          , sort("SignedInteger")
+                          ]
+                        , sort("DeciFloatExponentPart")
+                        , attrs([])
+                        )
+                      , prod(
+                          [ opt(
+                              char-class(simple-charclass(present(conc(short("\\+"), short("\\-")))))
+                            )
+                          , iter(
+                              char-class(simple-charclass(present(range(short("0"), short("9")))))
+                            )
+                          ]
+                        , sort("SignedInteger")
+                        , attrs([])
+                        )
+                      ]
+                    )
+                  )
+                , lexical-restrictions(
+                    [ follow(
+                        [sort("DeciFloatDigits")]
+                      , single(
+                          char-class(simple-charclass(present(range(short("0"), short("9")))))
+                        )
+                      )
+                    , follow(
+                        [sort("DeciFloatExponentPart")]
+                      , single(
+                          char-class(simple-charclass(present(range(short("0"), short("9")))))
+                        )
+                      )
+                    ]
+                  )
+                )
+              , sorts(
+                  [sort("HexaFloatNumeral"), sort("HexaSignificand"), sort("BinaryExponent"), sort("SignedInteger")]
+                )
+              )
+            , lexical-syntax(
+                [ prod(
+                    [sort("HexaSignificand"), sort("BinaryExponent")]
+                  , sort("HexaFloatNumeral")
+                  , attrs([])
+                  )
+                , prod(
+                    [ char-class(simple-charclass(present(short("0"))))
+                    , char-class(simple-charclass(present(conc(short("x"), short("X")))))
+                    , iter(
+                        char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  , sort("HexaSignificand")
+                  , attrs([])
+                  )
+                , prod(
+                    [ char-class(simple-charclass(present(short("0"))))
+                    , char-class(simple-charclass(present(conc(short("x"), short("X")))))
+                    , iter-star(
+                        char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    , lit(".")
+                    , iter-star(
+                        char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  , sort("HexaSignificand")
+                  , attrs([])
+                  )
+                , prod(
+                    [ char-class(simple-charclass(present(short("0"))))
+                    , char-class(simple-charclass(present(conc(short("x"), short("X")))))
+                    , lit(".")
+                    ]
+                  , sort("HexaSignificand")
+                  , attrs([reject()])
+                  )
+                , prod(
+                    [ char-class(simple-charclass(present(conc(short("p"), short("P")))))
+                    , sort("SignedInteger")
+                    ]
+                  , sort("BinaryExponent")
+                  , attrs([])
+                  )
+                ]
+              )
+            )
+          , lexical-restrictions(
+              [ follow(
+                  [sort("HexaSignificand")]
+                , single(
+                    char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("0"), short("9"))
+                          , conc(
+                              range(short("a"), short("f"))
+                            , range(short("A"), short("F"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              , follow(
+                  [sort("SignedInteger")]
+                , single(
+                    char-class(simple-charclass(present(range(short("0"), short("9")))))
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/IntegerLiterals")
+    , []
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts(
+                  [ sort("IntLiteral")
+                  , sort("DeciLiteral")
+                  , sort("HexaLiteral")
+                  , sort("OctaLiteral")
+                  , sort("DeciNumeral")
+                  , sort("HexaNumeral")
+                  , sort("OctaNumeral")
+                  ]
+                )
+              , context-free-syntax(
+                  [ prod(
+                      [sort("DeciLiteral")]
+                    , sort("IntLiteral")
+                    , attrs([term(cons("Deci"))])
+                    )
+                  , prod(
+                      [sort("HexaLiteral")]
+                    , sort("IntLiteral")
+                    , attrs([term(cons("Hexa"))])
+                    )
+                  , prod(
+                      [sort("OctaLiteral")]
+                    , sort("IntLiteral")
+                    , attrs([term(cons("Octa"))])
+                    )
+                  ]
+                )
+              )
+            , lexical-syntax(
+                [ prod(
+                    [ sort("DeciNumeral")
+                    , opt(
+                        char-class(simple-charclass(present(conc(short("l"), short("L")))))
+                      )
+                    ]
+                  , sort("DeciLiteral")
+                  , attrs([])
+                  )
+                , prod(
+                    [ sort("HexaNumeral")
+                    , opt(
+                        char-class(simple-charclass(present(conc(short("l"), short("L")))))
+                      )
+                    ]
+                  , sort("HexaLiteral")
+                  , attrs([])
+                  )
+                , prod(
+                    [ sort("OctaNumeral")
+                    , opt(
+                        char-class(simple-charclass(present(conc(short("l"), short("L")))))
+                      )
+                    ]
+                  , sort("OctaLiteral")
+                  , attrs([])
+                  )
+                , prod([lit("0")], sort("DeciNumeral"), attrs([]))
+                , prod(
+                    [ char-class(simple-charclass(present(range(short("1"), short("9")))))
+                    , iter-star(
+                        char-class(simple-charclass(present(range(short("0"), short("9")))))
+                      )
+                    ]
+                  , sort("DeciNumeral")
+                  , attrs([])
+                  )
+                , prod(
+                    [ char-class(simple-charclass(present(short("0"))))
+                    , char-class(simple-charclass(present(conc(short("x"), short("X")))))
+                    , iter(
+                        char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  , sort("HexaNumeral")
+                  , attrs([])
+                  )
+                , prod(
+                    [ char-class(simple-charclass(present(short("0"))))
+                    , iter(
+                        char-class(simple-charclass(present(range(short("0"), short("7")))))
+                      )
+                    ]
+                  , sort("OctaNumeral")
+                  , attrs([])
+                  )
+                ]
+              )
+            )
+          , lexical-restrictions(
+              [ follow(
+                  [sort("DeciNumeral")]
+                , single(
+                    char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("0"), short("9"))
+                          , conc(
+                              short("\\.")
+                            , conc(
+                                short("f")
+                              , conc(short("F"), conc(short("d"), short("D")))
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              , follow(
+                  [sort("HexaNumeral")]
+                , single(
+                    char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("0"), short("9"))
+                          , conc(
+                              range(short("a"), short("f"))
+                            , range(short("A"), short("F"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              , follow(
+                  [sort("OctaNumeral")]
+                , single(
+                    char-class(simple-charclass(present(range(short("0"), short("7")))))
+                  )
+                )
+              , follow(
+                  [sort("DeciLiteral")]
+                , single(
+                    char-class(simple-charclass(present(conc(short("l"), short("L")))))
+                  )
+                )
+              , follow(
+                  [sort("HexaLiteral")]
+                , single(
+                    char-class(simple-charclass(present(conc(short("l"), short("L")))))
+                  )
+                )
+              , follow(
+                  [sort("OctaLiteral")]
+                , single(
+                    char-class(simple-charclass(present(conc(short("l"), short("L")))))
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/literals/Main")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/literals/IntegerLiterals"))
+          , module(unparameterized("languages/java-15/lexical/literals/FloatingPointLiterals"))
+          , module(unparameterized("languages/java-15/lexical/literals/BooleanLiterals"))
+          , module(unparameterized("languages/java-15/lexical/literals/CharacterLiterals"))
+          , module(unparameterized("languages/java-15/lexical/literals/StringLiterals"))
+          , module(unparameterized("languages/java-15/lexical/literals/NullLiteral"))
+          ]
+        )
+      ]
+    , []
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/Modifiers")
+    , []
+    , [ exports(
+          conc-grammars(
+            sorts(
+              [ sort("Public")
+              , sort("Private")
+              , sort("Protected")
+              , sort("Abstract")
+              , sort("Final")
+              , sort("Static")
+              , sort("Native")
+              , sort("Transient")
+              , sort("Volatile")
+              , sort("Synchronized")
+              , sort("StrictFP")
+              , sort("Modifier")
+              ]
+            )
+          , context-free-syntax(
+              [ prod(
+                  [lit("public")]
+                , sort("Public")
+                , attrs([term(cons("Public"))])
+                )
+              , prod(
+                  [lit("private")]
+                , sort("Private")
+                , attrs([term(cons("Private"))])
+                )
+              , prod(
+                  [lit("protected")]
+                , sort("Protected")
+                , attrs([term(cons("Protected"))])
+                )
+              , prod(
+                  [lit("abstract")]
+                , sort("Abstract")
+                , attrs([term(cons("Abstract"))])
+                )
+              , prod(
+                  [lit("final")]
+                , sort("Final")
+                , attrs([term(cons("Final"))])
+                )
+              , prod(
+                  [lit("static")]
+                , sort("Static")
+                , attrs([term(cons("Static"))])
+                )
+              , prod(
+                  [lit("native")]
+                , sort("Native")
+                , attrs([term(cons("Native"))])
+                )
+              , prod(
+                  [lit("transient")]
+                , sort("Transient")
+                , attrs([term(cons("Transient"))])
+                )
+              , prod(
+                  [lit("volatile")]
+                , sort("Volatile")
+                , attrs([term(cons("Volatile"))])
+                )
+              , prod(
+                  [lit("synchronized")]
+                , sort("Synchronized")
+                , attrs([term(cons("Synchronized"))])
+                )
+              , prod(
+                  [lit("strictfp")]
+                , sort("StrictFP")
+                , attrs([term(cons("StrictFP"))])
+                )
+              , prod([sort("Public")], sort("Modifier"), attrs([]))
+              , prod([sort("Private")], sort("Modifier"), attrs([]))
+              , prod([sort("Protected")], sort("Modifier"), attrs([]))
+              , prod([sort("Abstract")], sort("Modifier"), attrs([]))
+              , prod([sort("Final")], sort("Modifier"), attrs([]))
+              , prod([sort("Static")], sort("Modifier"), attrs([]))
+              , prod([sort("Native")], sort("Modifier"), attrs([]))
+              , prod([sort("Transient")], sort("Modifier"), attrs([]))
+              , prod([sort("Volatile")], sort("Modifier"), attrs([]))
+              , prod([sort("Synchronized")], sort("Modifier"), attrs([]))
+              , prod([sort("StrictFP")], sort("Modifier"), attrs([]))
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/Keywords")
+    , []
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              sorts([sort("Keyword")])
+            , lexical-syntax(
+                [ prod([lit("abstract")], sort("Keyword"), attrs([]))
+                , prod([lit("assert")], sort("Keyword"), attrs([]))
+                , prod([lit("boolean")], sort("Keyword"), attrs([]))
+                , prod([lit("break")], sort("Keyword"), attrs([]))
+                , prod([lit("byte")], sort("Keyword"), attrs([]))
+                , prod([lit("case")], sort("Keyword"), attrs([]))
+                , prod([lit("catch")], sort("Keyword"), attrs([]))
+                , prod([lit("char")], sort("Keyword"), attrs([]))
+                , prod([lit("class")], sort("Keyword"), attrs([]))
+                , prod([lit("const")], sort("Keyword"), attrs([]))
+                , prod([lit("continue")], sort("Keyword"), attrs([]))
+                , prod([lit("default")], sort("Keyword"), attrs([]))
+                , prod([lit("do")], sort("Keyword"), attrs([]))
+                , prod([lit("double")], sort("Keyword"), attrs([]))
+                , prod([lit("else")], sort("Keyword"), attrs([]))
+                , prod([lit("enum")], sort("Keyword"), attrs([]))
+                , prod([lit("extends")], sort("Keyword"), attrs([]))
+                , prod([lit("final")], sort("Keyword"), attrs([]))
+                , prod([lit("finally")], sort("Keyword"), attrs([]))
+                , prod([lit("float")], sort("Keyword"), attrs([]))
+                , prod([lit("for")], sort("Keyword"), attrs([]))
+                , prod([lit("goto")], sort("Keyword"), attrs([]))
+                , prod([lit("if")], sort("Keyword"), attrs([]))
+                , prod([lit("implements")], sort("Keyword"), attrs([]))
+                , prod([lit("import")], sort("Keyword"), attrs([]))
+                , prod([lit("instanceof")], sort("Keyword"), attrs([]))
+                , prod([lit("int")], sort("Keyword"), attrs([]))
+                , prod([lit("interface")], sort("Keyword"), attrs([]))
+                , prod([lit("long")], sort("Keyword"), attrs([]))
+                , prod([lit("native")], sort("Keyword"), attrs([]))
+                , prod([lit("new")], sort("Keyword"), attrs([]))
+                , prod([lit("package")], sort("Keyword"), attrs([]))
+                , prod([lit("private")], sort("Keyword"), attrs([]))
+                , prod([lit("protected")], sort("Keyword"), attrs([]))
+                , prod([lit("public")], sort("Keyword"), attrs([]))
+                , prod([lit("return")], sort("Keyword"), attrs([]))
+                , prod([lit("short")], sort("Keyword"), attrs([]))
+                , prod([lit("static")], sort("Keyword"), attrs([]))
+                , prod([lit("strictfp")], sort("Keyword"), attrs([]))
+                , prod([lit("super")], sort("Keyword"), attrs([]))
+                , prod([lit("switch")], sort("Keyword"), attrs([]))
+                , prod([lit("synchronized")], sort("Keyword"), attrs([]))
+                , prod([lit("this")], sort("Keyword"), attrs([]))
+                , prod([lit("throw")], sort("Keyword"), attrs([]))
+                , prod([lit("throws")], sort("Keyword"), attrs([]))
+                , prod([lit("transient")], sort("Keyword"), attrs([]))
+                , prod([lit("try")], sort("Keyword"), attrs([]))
+                , prod([lit("void")], sort("Keyword"), attrs([]))
+                , prod([lit("volatile")], sort("Keyword"), attrs([]))
+                , prod([lit("while")], sort("Keyword"), attrs([]))
+                ]
+              )
+            )
+          , lexical-restrictions(
+              [ follow(
+                  [ lit("abstract")
+                  , lit("assert")
+                  , lit("boolean")
+                  , lit("break")
+                  , lit("byte")
+                  , lit("case")
+                  , lit("catch")
+                  , lit("char")
+                  , lit("class")
+                  , lit("const")
+                  , lit("continue")
+                  , lit("default")
+                  , lit("do")
+                  , lit("double")
+                  , lit("else")
+                  , lit("enum")
+                  , lit("extends")
+                  , lit("final")
+                  , lit("finally")
+                  , lit("float")
+                  , lit("for")
+                  , lit("goto")
+                  , lit("if")
+                  , lit("implements")
+                  , lit("import")
+                  , lit("instanceof")
+                  , lit("int")
+                  , lit("interface")
+                  , lit("long")
+                  , lit("native")
+                  , lit("new")
+                  , lit("package")
+                  , lit("private")
+                  , lit("protected")
+                  , lit("public")
+                  , lit("return")
+                  , lit("short")
+                  , lit("static")
+                  , lit("strictfp")
+                  , lit("super")
+                  , lit("switch")
+                  , lit("synchronized")
+                  , lit("this")
+                  , lit("throw")
+                  , lit("throws")
+                  , lit("transient")
+                  , lit("try")
+                  , lit("void")
+                  , lit("volatile")
+                  , lit("while")
+                  ]
+                , single(
+                    char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("A"), short("Z"))
+                          , conc(
+                              range(short("a"), short("z"))
+                            , conc(
+                                range(short("0"), short("9"))
+                              , conc(short("\\_"), short("\\$"))
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/Identifiers")
+    , [imports([module(unparameterized("languages/java-15/lexical/Keywords"))])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts([sort("Id"), sort("ID")])
+              , context-free-syntax(
+                  [ prod(
+                      [sort("ID")]
+                    , sort("Id")
+                    , attrs([term(cons("Id"))])
+                    )
+                  ]
+                )
+              )
+            , lexical-syntax(
+                [ prod(
+                    [ char-class(
+                        simple-charclass(
+                          present(
+                            conc(
+                              range(short("A"), short("Z"))
+                            , conc(
+                                range(short("a"), short("z"))
+                              , conc(short("\\_"), short("\\$"))
+                              )
+                            )
+                          )
+                        )
+                      )
+                    , iter-star(
+                        char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("A"), short("Z"))
+                              , conc(
+                                  range(short("a"), short("z"))
+                                , conc(
+                                    range(short("0"), short("9"))
+                                  , conc(short("\\_"), short("\\$"))
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  , sort("ID")
+                  , attrs([])
+                  )
+                , prod(
+                    [sort("Keyword")]
+                  , sort("ID")
+                  , attrs([reject()])
+                  )
+                , prod(
+                    [lit("true")]
+                  , sort("ID")
+                  , attrs([reject()])
+                  )
+                , prod(
+                    [lit("false")]
+                  , sort("ID")
+                  , attrs([reject()])
+                  )
+                , prod(
+                    [lit("null")]
+                  , sort("ID")
+                  , attrs([reject()])
+                  )
+                ]
+              )
+            )
+          , lexical-restrictions(
+              [ follow(
+                  [sort("ID")]
+                , single(
+                    char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("a"), short("z"))
+                          , conc(
+                              range(short("A"), short("Z"))
+                            , conc(
+                                range(short("0"), short("9"))
+                              , conc(short("\\_"), short("\\$"))
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/Comments")
+    , [imports([module(unparameterized("languages/java-15/lexical/LineTerminators"))])]
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                sorts(
+                  [ sort("Comment")
+                  , sort("EOLCommentChars")
+                  , sort("CommentPart")
+                  , sort("UnicodeEscape")
+                  , sort("BlockCommentChars")
+                  , sort("Asterisk")
+                  , sort("EscEscChar")
+                  , sort("EscChar")
+                  ]
+                )
+              , lexical-syntax(
+                  [ prod([sort("Comment")], layout(), attrs([]))
+                  , prod(
+                      [lit("//"), sort("EOLCommentChars"), sort("LineTerminator")]
+                    , sort("Comment")
+                    , attrs([])
+                    )
+                  , prod(
+                      [ iter-star(
+                          char-class(
+                            comp(simple-charclass(present(conc(short("\\n"), short("\\r")))))
+                          )
+                        )
+                      ]
+                    , sort("EOLCommentChars")
+                    , attrs([])
+                    )
+                  , prod(
+                      [lit("/*"), iter-star(sort("CommentPart")), lit("*/")]
+                    , sort("Comment")
+                    , attrs([])
+                    )
+                  , prod(
+                      [lit("/**"), iter-star(sort("CommentPart")), lit("*/")]
+                    , sort("Comment")
+                    , attrs([])
+                    )
+                  , prod([lit("/**/")], sort("Comment"), attrs([]))
+                  , prod([sort("BlockCommentChars")], sort("CommentPart"), attrs([]))
+                  , prod([sort("EscChar")], sort("CommentPart"), attrs([]))
+                  , prod([sort("EscEscChar")], sort("CommentPart"), attrs([]))
+                  , prod([sort("Asterisk")], sort("CommentPart"), attrs([]))
+                  , prod([sort("UnicodeEscape")], sort("CommentPart"), attrs([]))
+                  , prod(
+                      [ iter(
+                          char-class(
+                            comp(simple-charclass(present(conc(short("\\*"), short("\\\\")))))
+                          )
+                        )
+                      ]
+                    , sort("BlockCommentChars")
+                    , attrs([])
+                    )
+                  , prod([lit("*")], sort("Asterisk"), attrs([]))
+                  , prod([lit("\\\\\\\\")], sort("EscEscChar"), attrs([]))
+                  , prod([lit("\\\\")], sort("EscChar"), attrs([]))
+                  , prod(
+                      [ lit("\\\\")
+                      , iter(char-class(simple-charclass(present(short("u")))))
+                      , char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      , char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      , char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      , char-class(
+                          simple-charclass(
+                            present(
+                              conc(
+                                range(short("0"), short("9"))
+                              , conc(
+                                  range(short("a"), short("f"))
+                                , range(short("A"), short("F"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      ]
+                    , sort("UnicodeEscape")
+                    , attrs([])
+                    )
+                  ]
+                )
+              )
+            , lexical-restrictions(
+                [ follow(
+                    [lit("/**")]
+                  , single(char-class(simple-charclass(present(short("\\/")))))
+                  )
+                , follow(
+                    [lit("/*")]
+                  , single(char-class(simple-charclass(present(short("\\*")))))
+                  )
+                , follow(
+                    [sort("Asterisk")]
+                  , single(char-class(simple-charclass(present(short("\\/")))))
+                  )
+                , follow(
+                    [sort("EscChar")]
+                  , single(
+                      char-class(simple-charclass(present(conc(short("\\\\"), short("u")))))
+                    )
+                  )
+                , follow(
+                    [sort("BlockCommentChars")]
+                  , single(
+                      char-class(
+                        comp(simple-charclass(present(conc(short("\\*"), short("\\\\")))))
+                      )
+                    )
+                  )
+                , follow(
+                    [sort("EOLCommentChars")]
+                  , single(
+                      char-class(
+                        comp(simple-charclass(present(conc(short("\\n"), numeric("\\13")))))
+                      )
+                    )
+                  )
+                ]
+              )
+            )
+          , context-free-restrictions(
+              [ follow(
+                  [opt(layout())]
+                , single(
+                    seq(
+                      simple-charclass(present(short("\\/")))
+                    , single(char-class(simple-charclass(present(short("\\*")))))
+                    )
+                  )
+                )
+              , follow(
+                  [opt(layout())]
+                , single(
+                    seq(
+                      simple-charclass(present(short("\\/")))
+                    , single(char-class(simple-charclass(present(short("\\/")))))
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/WhiteSpace")
+    , []
+    , [ exports(
+          conc-grammars(
+            lexical-syntax([])
+          , context-free-restrictions(
+              [ follow(
+                  [opt(layout())]
+                , single(
+                    char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            short("\\ ")
+                          , conc(
+                              short("\\t")
+                            , conc(numeric("\\12"), conc(short("\\n"), short("\\r")))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/LineTerminators")
+    , []
+    , [ exports(
+          conc-grammars(
+            conc-grammars(
+              conc-grammars(
+                conc-grammars(
+                  sorts([sort("LineTerminator"), sort("CarriageReturn"), sort("EndOfFile")])
+                , lexical-syntax(
+                    [ prod(
+                        [char-class(simple-charclass(present(short("\\n"))))]
+                      , sort("LineTerminator")
+                      , attrs([])
+                      )
+                    , prod(
+                        [ char-class(simple-charclass(present(short("\\r"))))
+                        , char-class(simple-charclass(present(short("\\n"))))
+                        ]
+                      , sort("LineTerminator")
+                      , attrs([])
+                      )
+                    , prod([sort("CarriageReturn")], sort("LineTerminator"), attrs([]))
+                    , prod([sort("EndOfFile")], sort("LineTerminator"), attrs([]))
+                    , prod(
+                        [char-class(simple-charclass(present(short("\\r"))))]
+                      , sort("CarriageReturn")
+                      , attrs([])
+                      )
+                    ]
+                  )
+                )
+              , lexical-restrictions(
+                  [ follow(
+                      [sort("CarriageReturn")]
+                    , single(char-class(simple-charclass(present(short("\\n")))))
+                    )
+                  ]
+                )
+              )
+            , lexical-syntax([prod([], sort("EndOfFile"), attrs([]))])
+            )
+          , lexical-restrictions(
+              [follow(
+                 [sort("EndOfFile")]
+               , single(char-class(comp(simple-charclass(absent()))))
+               )]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/UnicodeEscapes")
+    , []
+    , [ exports(
+          conc-grammars(
+            sorts([sort("UnicodeEscape")])
+          , syntax(
+              [ prod(
+                  [ lit("\\\\")
+                  , iter(char-class(simple-charclass(present(short("u")))))
+                  , char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("0"), short("9"))
+                          , conc(
+                              range(short("a"), short("f"))
+                            , range(short("A"), short("F"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  , char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("0"), short("9"))
+                          , conc(
+                              range(short("a"), short("f"))
+                            , range(short("A"), short("F"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  , char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("0"), short("9"))
+                          , conc(
+                              range(short("a"), short("f"))
+                            , range(short("A"), short("F"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  , char-class(
+                      simple-charclass(
+                        present(
+                          conc(
+                            range(short("0"), short("9"))
+                          , conc(
+                              range(short("a"), short("f"))
+                            , range(short("A"), short("F"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  ]
+                , sort("UnicodeEscape")
+                , attrs([term(cons("UnicodeEscape"))])
+                )
+              ]
+            )
+          )
+        )
+      ]
+    )
+  , module(
+      unparameterized("languages/java-15/lexical/Main")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/UnicodeEscapes"))
+          , module(unparameterized("languages/java-15/lexical/LineTerminators"))
+          , module(unparameterized("languages/java-15/lexical/WhiteSpace"))
+          , module(unparameterized("languages/java-15/lexical/Comments"))
+          , module(unparameterized("languages/java-15/lexical/Identifiers"))
+          , module(unparameterized("languages/java-15/lexical/Keywords"))
+          , module(unparameterized("languages/java-15/lexical/Modifiers"))
+          , module(unparameterized("languages/java-15/lexical/literals/Main"))
+          ]
+        )
+      ]
+    , []
+    )
+  , module(
+      unparameterized("languages/java-15/Main")
+    , [ imports(
+          [ module(unparameterized("languages/java-15/lexical/Main"))
+          , module(unparameterized("languages/java-15/types/Main"))
+          , module(unparameterized("languages/java-15/names/Main"))
+          , module(unparameterized("languages/java-15/packages/Main"))
+          , module(unparameterized("languages/java-15/classes/Main"))
+          , module(unparameterized("languages/java-15/interfaces/Main"))
+          , module(unparameterized("languages/java-15/arrays/Main"))
+          , module(unparameterized("languages/java-15/statements/Main"))
+          , module(unparameterized("languages/java-15/expressions/Main"))
+          ]
+        )
+      ]
+    , []
+    )
+  , module(
+      unparameterized("Java-15")
+    , [imports([module(unparameterized("languages/java-15/Main"))])]
+    , []
+    )
+  , module(
+      unparameterized("org/sugarj/languages/Java")
+    , [ imports(
+          [ renamed-module(
+              unparameterized("Java-15")
+            , renamings(
+                [ symbol(sort("CompilationUnit"), sort("JavaCompilationUnit"))
+                , symbol(sort("TypeDec"), sort("JavaTypeDec"))
+                , symbol(sort("ImportDec"), sort("JavaImportDec"))
+                , symbol(sort("PackageDec"), sort("JavaPackageDec"))
+                , symbol(sort("ElemVal"), sort("JavaElemVal"))
+                , symbol(sort("ElemValPair"), sort("JavaElemValPair"))
+                , symbol(sort("Anno"), sort("JavaAnno"))
+                , symbol(sort("LHS"), sort("JavaLHS"))
+                , symbol(sort("CondMid"), sort("JavaCondMid"))
+                , symbol(sort("ArraySubscript"), sort("JavaArraySubscript"))
+                , symbol(sort("DimExpr"), sort("JavaDimExpr"))
+                , symbol(sort("ArrayBaseType"), sort("JavaArrayBaseType"))
+                , symbol(sort("ArrayCreationExpr"), sort("JavaArrayCreationExpr"))
+                , symbol(sort("ClassMemberDec"), sort("JavaClassMemberDec"))
+                , symbol(sort("ClassBodyDec"), sort("JavaClassBodyDec"))
+                , symbol(sort("Interfaces"), sort("JavaInterfaces"))
+                , symbol(sort("Super"), sort("JavaSuper"))
+                , symbol(sort("ClassMod"), sort("JavaClassMod"))
+                , symbol(sort("ClassDecHead"), sort("JavaClassDecHead"))
+                , symbol(sort("ClassBody"), sort("JavaClassBody"))
+                , symbol(sort("ClassDec"), sort("JavaClassDec"))
+                , symbol(sort("InterfaceMod"), sort("JavaInterfaceMod"))
+                , symbol(sort("InterfaceMemberDec"), sort("JavaInterfaceMemberDec"))
+                , symbol(sort("ExtendsInterfaces"), sort("JavaExtendsInterfaces"))
+                , symbol(sort("InterfaceDecHead"), sort("JavaInterfaceDecHead"))
+                , symbol(sort("InterfaceDec"), sort("JavaInterfaceDec"))
+                , symbol(sort("DefaultVal"), sort("JavaDefaultVal"))
+                , symbol(sort("AnnoElemDec"), sort("JavaAnnoElemDec"))
+                , symbol(sort("AnnoDecHead"), sort("JavaAnnoDecHead"))
+                , symbol(sort("AnnoDec"), sort("JavaAnnoDec"))
+                , symbol(sort("AbstractMethodMod"), sort("JavaAbstractMethodMod"))
+                , symbol(sort("AbstractMethodDec"), sort("JavaAbstractMethodDec"))
+                , symbol(sort("ConstantMod"), sort("JavaConstantMod"))
+                , symbol(sort("ConstantDec"), sort("JavaConstantDec"))
+                , symbol(sort("EnumBodyDecs"), sort("JavaEnumBodyDecs"))
+                , symbol(sort("EnumConstArgs"), sort("JavaEnumConstArgs"))
+                , symbol(sort("EnumConst"), sort("JavaEnumConst"))
+                , symbol(sort("EnumBody"), sort("JavaEnumBody"))
+                , symbol(sort("EnumDecHead"), sort("JavaEnumDecHead"))
+                , symbol(sort("EnumDec"), sort("JavaEnumDec"))
+                , symbol(sort("ConstrMod"), sort("JavaConstrMod"))
+                , symbol(sort("ConstrInv"), sort("JavaConstrInv"))
+                , symbol(sort("ConstrBody"), sort("JavaConstrBody"))
+                , symbol(sort("ConstrHead"), sort("JavaConstrHead"))
+                , symbol(sort("ConstrDec"), sort("JavaConstrDec"))
+                , symbol(sort("StaticInit"), sort("JavaStaticInit"))
+                , symbol(sort("InstanceInit"), sort("JavaInstanceInit"))
+                , symbol(sort("MethodBody"), sort("JavaMethodBody"))
+                , symbol(sort("ExceptionType"), sort("JavaExceptionType"))
+                , symbol(sort("Throws"), sort("JavaThrows"))
+                , symbol(sort("MethodMod"), sort("JavaMethodMod"))
+                , symbol(sort("VarMod"), sort("JavaVarMod"))
+                , symbol(sort("FormalParam"), sort("JavaFormalParam"))
+                , symbol(sort("ResultType"), sort("JavaResultType"))
+                , symbol(sort("MethodDecHead"), sort("JavaMethodDecHead"))
+                , symbol(sort("MethodDec"), sort("JavaMethodDec"))
+                , symbol(sort("BlockStm"), sort("JavaBlockStm"))
+                , symbol(sort("Block"), sort("JavaBlock"))
+                , symbol(sort("CatchClause"), sort("JavaCatchClause"))
+                , symbol(sort("SwitchLabel"), sort("JavaSwitchLabel"))
+                , symbol(sort("SwitchGroup"), sort("JavaSwitchGroup"))
+                , symbol(sort("SwitchBlock"), sort("JavaSwitchBlock"))
+                , symbol(sort("Stm"), sort("JavaStm"))
+                , symbol(sort("LocalVarDec"), sort("JavaLocalVarDec"))
+                , symbol(sort("LocalVarDecStm"), sort("JavaLocalVarDecStm"))
+                , symbol(sort("FieldMod"), sort("JavaFieldMod"))
+                , symbol(sort("VarInit"), sort("JavaVarInit"))
+                , symbol(sort("Dim"), sort("JavaDim"))
+                , symbol(sort("VarDecId"), sort("JavaVarDecId"))
+                , symbol(sort("VarDec"), sort("JavaVarDec"))
+                , symbol(sort("FieldDec"), sort("JavaFieldDec"))
+                , symbol(sort("ArrayInit"), sort("JavaArrayInit"))
+                , symbol(sort("ClassLiteral"), sort("JavaClassLiteral"))
+                , symbol(sort("Literal"), sort("JavaLiteral"))
+                , symbol(sort("Type"), sort("JavaType"))
+                , symbol(sort("ArrayType"), sort("JavaArrayType"))
+                , symbol(sort("TypeVar"), sort("JavaTypeVar"))
+                , symbol(sort("TypeDecSpec"), sort("JavaTypeDecSpec"))
+                , symbol(sort("InterfaceType"), sort("JavaInterfaceType"))
+                , symbol(sort("ClassType"), sort("JavaClassType"))
+                , symbol(sort("ClassOrInterfaceType"), sort("JavaClassOrInterfaceType"))
+                , symbol(sort("RefType"), sort("JavaRefType"))
+                , symbol(sort("TypeVarId"), sort("JavaTypeVarId"))
+                , symbol(sort("TypeParams"), sort("JavaTypeParams"))
+                , symbol(sort("TypeBound"), sort("JavaTypeBound"))
+                , symbol(sort("TypeParam"), sort("JavaTypeParam"))
+                , symbol(sort("WildcardBound"), sort("JavaWildcardBound"))
+                , symbol(sort("ActualTypeArg"), sort("JavaActualTypeArg"))
+                , symbol(sort("TypeArgs"), sort("JavaTypeArgs"))
+                , symbol(sort("PackageOrTypeName"), sort("JavaPackageOrTypeName"))
+                , symbol(sort("MethodName"), sort("JavaMethodName"))
+                , symbol(sort("ExprName"), sort("JavaExprName"))
+                , symbol(sort("TypeName"), sort("JavaTypeName"))
+                , symbol(sort("AmbName"), sort("JavaAmbName"))
+                , symbol(sort("PackageName"), sort("JavaPackageName"))
+                , symbol(sort("FloatType"), sort("JavaFloatType"))
+                , symbol(sort("IntType"), sort("JavaIntType"))
+                , symbol(sort("NumType"), sort("JavaNumType"))
+                , symbol(sort("PrimType"), sort("JavaPrimType"))
+                , symbol(sort("NullLiteral"), sort("JavaNullLiteral"))
+                , symbol(sort("FooStringChars"), sort("JavaFooStringChars"))
+                , symbol(sort("StringChars"), sort("JavaStringChars"))
+                , symbol(sort("StringPart"), sort("JavaStringPart"))
+                , symbol(sort("StringLiteral"), sort("JavaStringLiteral"))
+                , symbol(sort("SingleChar"), sort("JavaSingleChar"))
+                , symbol(sort("CharContent"), sort("JavaCharContent"))
+                , symbol(sort("CharLiteral"), sort("JavaCharLiteral"))
+                , symbol(sort("LastOcta"), sort("JavaLastOcta"))
+                , symbol(sort("OctaEscape"), sort("JavaOctaEscape"))
+                , symbol(sort("NamedEscape"), sort("JavaNamedEscape"))
+                , symbol(sort("EscapeSeq"), sort("JavaEscapeSeq"))
+                , symbol(sort("Bool"), sort("JavaBool"))
+                , symbol(sort("BoolLiteral"), sort("JavaBoolLiteral"))
+                , symbol(sort("BinaryExponent"), sort("JavaBinaryExponent"))
+                , symbol(sort("HexaSignificand"), sort("JavaHexaSignificand"))
+                , symbol(sort("HexaFloatNumeral"), sort("JavaHexaFloatNumeral"))
+                , symbol(sort("SignedInteger"), sort("JavaSignedInteger"))
+                , symbol(sort("DeciFloatExponentPart"), sort("JavaDeciFloatExponentPart"))
+                , symbol(sort("DeciFloatDigits"), sort("JavaDeciFloatDigits"))
+                , symbol(sort("DeciFloatNumeral"), sort("JavaDeciFloatNumeral"))
+                , symbol(sort("FloatLiteral"), sort("JavaFloatLiteral"))
+                , symbol(sort("HexaFloatLiteral"), sort("JavaHexaFloatLiteral"))
+                , symbol(sort("DeciFloatLiteral"), sort("JavaDeciFloatLiteral"))
+                , symbol(sort("IntLiteral"), sort("JavaIntLiteral"))
+                , symbol(sort("OctaNumeral"), sort("JavaOctaNumeral"))
+                , symbol(sort("HexaNumeral"), sort("JavaHexaNumeral"))
+                , symbol(sort("DeciNumeral"), sort("JavaDeciNumeral"))
+                , symbol(sort("OctaLiteral"), sort("JavaOctaLiteral"))
+                , symbol(sort("HexaLiteral"), sort("JavaHexaLiteral"))
+                , symbol(sort("DeciLiteral"), sort("JavaDeciLiteral"))
+                , symbol(sort("Modifier"), sort("JavaModifier"))
+                , symbol(sort("StrictFP"), sort("JavaStrictFP"))
+                , symbol(sort("Synchronized"), sort("JavaSynchronized"))
+                , symbol(sort("Volatile"), sort("JavaVolatile"))
+                , symbol(sort("Transient"), sort("JavaTransient"))
+                , symbol(sort("Native"), sort("JavaNative"))
+                , symbol(sort("Static"), sort("JavaStatic"))
+                , symbol(sort("Final"), sort("JavaFinal"))
+                , symbol(sort("Abstract"), sort("JavaAbstract"))
+                , symbol(sort("Protected"), sort("JavaProtected"))
+                , symbol(sort("Private"), sort("JavaPrivate"))
+                , symbol(sort("Public"), sort("JavaPublic"))
+                , symbol(sort("Id"), sort("JavaId"))
+                , symbol(sort("ID"), sort("JavaID"))
+                , symbol(sort("Keyword"), sort("JavaKeyword"))
+                , symbol(sort("EscChar"), sort("JavaEscChar"))
+                , symbol(sort("EscEscChar"), sort("JavaEscEscChar"))
+                , symbol(sort("Asterisk"), sort("JavaAsterisk"))
+                , symbol(sort("BlockCommentChars"), sort("JavaBlockCommentChars"))
+                , symbol(sort("CommentPart"), sort("JavaCommentPart"))
+                , symbol(sort("EOLCommentChars"), sort("JavaEOLCommentChars"))
+                , symbol(sort("Comment"), sort("JavaComment"))
+                , symbol(sort("EndOfFile"), sort("JavaEndOfFile"))
+                , symbol(sort("CarriageReturn"), sort("JavaCarriageReturn"))
+                , symbol(sort("LineTerminator"), sort("JavaLineTerminator"))
+                , symbol(sort("UnicodeEscape"), sort("JavaUnicodeEscape"))
+                , symbol(sort("ArrayAccess"), sort("JavaArrayAccess"))
+                , symbol(sort("FieldAccess"), sort("JavaFieldAccess"))
+                , symbol(sort("MethodSpec"), sort("JavaMethodSpec"))
+                , symbol(sort("Expr"), sort("JavaExpr"))
+                ]
+              )
+            )
+          ]
+        )
+      ]
+    , []
+    )
+  ]
+)
